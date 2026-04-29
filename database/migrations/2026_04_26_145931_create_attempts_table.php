@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('attempts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // The Student
+            $table->foreignId('quiz_id')->constrained()->onDelete('cascade');
+            $table->integer('score');
+            $table->integer('total_questions');
+            // Useful for AI: Store raw answers as JSON so the AI knows exactly what they missed
+            $table->json('student_answers')->nullable(); 
+            $table->timestamp('completed_at')->useCurrent();
             $table->timestamps();
         });
     }

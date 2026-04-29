@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #f8fafc;
+    background: linear-gradient(135deg, #1a3c34 0%, #2d5a47 50%, #4a7c59 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -18,10 +18,10 @@ body {
     background: white;
     padding: 2.5rem 2rem;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 32px rgba(26, 60, 52, 0.3);
     width: 100%;
     max-width: 380px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #e5e7eb;
 }
 
 .login-header {
@@ -30,14 +30,14 @@ body {
 }
 
 .login-header h1 {
-    color: #1e293b;
+    color: #1a3c34;
     font-size: 1.8rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
 
 .login-header p {
-    color: #64748b;
+    color: #6b7280;
     font-size: 1rem;
     font-weight: 400;
 }
@@ -57,16 +57,17 @@ body {
 .form-group input {
     width: 100%;
     padding: 0.875rem 1rem;
-    border: 2px solid #e5e7eb;
+    border: 2px solid #d1d5db;
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: #f9fafb;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
 }
 
 .form-group input::placeholder {
@@ -76,7 +77,7 @@ body {
 .submit-btn {
     width: 100%;
     padding: 1rem;
-    background: #3b82f6;
+    background: #16a34a;
     color: white;
     border: none;
     border-radius: 8px;
@@ -88,7 +89,7 @@ body {
 }
 
 .submit-btn:hover {
-    background: #2563eb;
+    background: #15803d;
     transform: translateY(-1px);
 }
 
@@ -101,7 +102,7 @@ body {
 }
 
 .forgot-password a {
-    color: #3b82f6;
+    color: #16a34a;
     text-decoration: none;
     font-weight: 500;
     font-size: 0.9rem;

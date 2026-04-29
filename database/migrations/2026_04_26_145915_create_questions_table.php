@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId(quizId)->constrained()->onDelete('cascade');
+            $table->foreignId('quizId')->constrained()->onDelete('cascade');
             $table->text('question_text');
             $table->string('question_type')->default('multiple_choice'); //eg. true or false, short answer
 
             $table->json('options')->nullable();
+
+            $table->text('correct_answer');
+            $table->integer('points')->default(1); // How much this question is worth
+            $table->text('explanation')->nullable(); // Shown after the student answers
             $table->timestamps();
         });
     }

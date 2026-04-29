@@ -3,30 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>School LMS - Login</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="login-container">
         <div class="login-header">
-            <h1>Welcome Back</h1>
-            <p>Please sign in to your account</p>
+            <h1>School LMS</h1>
+            <p>Student Login</p>
         </div>
 
         <form id="loginForm">
-            <div class="form-group email">
-                <label for="email">Email Address</label>
+            <div class="form-group">
+                <label for="email">Email</label>
                 <input type="email" id="email" name="email" required 
-                       placeholder="Enter your email" autocomplete="email">
+                       placeholder="student@school.edu" autocomplete="email">
             </div>
 
-            <div class="form-group password">
+            <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required 
                        placeholder="Enter your password" autocomplete="current-password">
             </div>
 
-            <button type="submit" class="submit-btn">Sign In</button>
+            <button type="submit" class="submit-btn">Login</button>
         </form>
 
         <div class="forgot-password">

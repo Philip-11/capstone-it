@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('progress', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // The Student
+            $table->foreignId('lesson_id')->constrained()->onDelete('cascade');
+            $table->enum('status', ['started', 'in_progress', 'completed'])->default('started');
+            $table->integer('time_spent_seconds')->default(0); // Great for AI "effort" analysis
+            $table->timestamp('last_accessed_at')->useCurrent();
             $table->timestamps();
         });
     }

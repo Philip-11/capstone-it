@@ -38,17 +38,131 @@ body {
 }
 
 .login-header h1 {
-    color: #ffffff;
-    font-size: 1.8rem;
-    font-weight: 600;
+    font-size: 2.2rem;
+    font-weight: 700;
     margin-bottom: 0.5rem;
-    text-shadow: 0 2px 4px rgba(12, 26, 58, 0.3);
+    background: linear-gradient(90deg, 
+        #60a5fa 0%,    /* G - Light Blue */
+        #a78bfa 25%,   /* L - Purple */
+        #f472b6 50%,   /* M - Pink */
+        #f59e0b 75%,   /* S - Gold */
+        #10b981 100%); /* End - Green */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.025em;
 }
 
 .login-header p {
     color: rgba(255, 255, 255, 0.8);
     font-size: 1rem;
     font-weight: 400;
+}
+
+/* EMAIL Label */
+.form-group:nth-child(1) label {
+    background: linear-gradient(90deg, 
+        #3b82f6 0%,     /* E - Blue */
+        #60a5fa 30%,    /* M - Light Blue */
+        #93c5fd 60%,    /* A - Sky Blue */
+        #bfdbfe 100%);  /* I - Pale Blue */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* PASSWORD Label */
+.form-group:nth-child(2) label {
+    background: linear-gradient(90deg, 
+        #ec4899 0%,     /* P - Pink */
+        #f472b6 25%,    /* A - Light Pink */
+        #f9a8d4 50%,    /* S - Pale Pink */
+        #fbcfe8 75%,    /* S - Very Pale Pink */
+        #fce7f3 100%);  /* W - Baby Pink */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* LOGIN Button */
+.submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #f59e0b 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn::before {
+    content: 'LOGIN';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.submit-btn:hover::before {
+    left: 100%;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(139, 92, 246, 0.6);
+}
+
+/* FORGOT PASSWORD Link */
+.forgot-password a {
+    background: linear-gradient(90deg, 
+        #f59e0b 0%,     /* F - Gold */
+        #fbbf24 20%,    /* O - Light Gold */
+        #fCD34d 40%,    /* R - Yellow */
+        #fde047 60%,    /* G - Bright Yellow */
+        #fef3c7 80%,    /* O - Pale Yellow */
+        #fefce8 100%);  /* T - Cream */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    position: relative;
+}
+
+.forgot-password a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -3px;
+    left: 50%;
+    background: linear-gradient(90deg, #f59e0b, #10b981);
+    transition: all 0.3s ease;
+    border-radius: 1px;
+}
+
+.forgot-password a:hover::after {
+    width: 100%;
+    left: 0;
 }
 
 .form-group {
@@ -58,7 +172,6 @@ body {
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #e2e8f0;
     font-weight: 500;
     font-size: 0.9rem;
 }
@@ -88,45 +201,8 @@ body {
     background: rgba(255, 255, 255, 0.15);
 }
 
-.submit-btn {
-    width: 100%;
-    padding: 1rem;
-    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 1rem;
-    box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
-}
-
-.submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(30, 64, 175, 0.6);
-    background: linear-gradient(135deg, #1d4ed8 0%, #3730a3 100%);
-}
-
 .submit-btn:active {
     transform: translateY(0);
-}
-
-.forgot-password {
-    text-align: center;
-}
-
-.forgot-password a {
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.9rem;
-}
-
-.forgot-password a:hover {
-    color: white;
-    text-decoration: underline;
 }
 
 @media (max-width: 480px) {
@@ -137,6 +213,6 @@ body {
     }
     
     .login-header h1 {
-        font-size: 1.6rem;
+        font-size: 2rem;
     }
 }

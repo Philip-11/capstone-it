@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId(quizId)->constrained()->onDelete('cascade');
+            $table->text('question_text');
+            $table->string('question_type')->default('multiple_choice'); //eg. true or false, short answer
+
+            $table->json('options')->nullable();
             $table->timestamps();
         });
     }

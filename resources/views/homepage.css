@@ -17,10 +17,13 @@ body {
 
 /* SIDEBAR */
 .sidebar {
+    position: fixed; /* ADD THIS */
+    top: 0;
+    left: 0;
     width: 230px;
+    height: 100vh;
     background: #1e3a8a;
     color: white;
-    height: 100vh;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -84,9 +87,8 @@ body {
 
 /* MAIN CONTENT */
 .main-content {
-    margin-left: 280px;
-    padding: 20px;
-    min-height: 100vh;
+    margin-left: 230px;
+    padding: 25px;
 }
 
 /* NAVBAR */

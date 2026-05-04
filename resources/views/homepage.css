@@ -247,3 +247,85 @@ body {
         padding: 10px;
     }
 }
+
+/* ASSIGNMENTS SECTION */
+.assignments {
+    margin-top: 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* HEADER */
+.assignments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.assignments-header h3 {
+    color: #1e3a8a;
+}
+
+.assignments-header a {
+    font-size: 0.9rem;
+    color: #1d4ed8;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.assignments-header a:hover {
+    text-decoration: underline;
+}
+
+/* ITEM */
+.assignment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.assignment-item:hover {
+    background: #f3f4f6;
+}
+
+/* LEFT TEXT */
+.assignment-item .left h4 {
+    font-size: 0.95rem;
+    color: #1e3a8a;
+}
+
+.assignment-item .left p {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+/* RIGHT SIDE */
+.assignment-item .right {
+    text-align: right;
+}
+
+.assignment-item .right small {
+    display: block;
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+/* BADGE */
+.due {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+/* RED (URGENT) */
+.due.red {
+    background: #fee2e2;
+    color: #dc2626;
+}

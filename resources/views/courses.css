@@ -5,6 +5,23 @@
     font-family: 'Inter', sans-serif;
 }
 
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, 
+        #0c1a3a 0%, 
+        #1e3a8a 25%, 
+        #1e40af 50%, 
+        #1d4ed8 75%, 
+        #3730a3 100%);
+    min-height: 100vh;
+}
+
 /* TITLE */
 .section-title {
     margin-bottom: 15px;

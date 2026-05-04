@@ -11,7 +11,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->group(function () {
 
     //Teacher dashboard
     Route::get('/teacher/lessons', [TeacherController::class, 'index'])->name('teacher.lessons.name');

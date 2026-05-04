@@ -22,6 +22,11 @@ body {
     min-height: 100vh;
 }
 
+/* NAVBAR */ 
+.navbar h2 {
+    color: #1e3a8a;
+}
+
 /* TITLE */
 .section-title {
     margin-bottom: 15px;

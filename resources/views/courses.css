@@ -12,7 +12,7 @@
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', -apple-syste  m, BlinkMacSystemFont, sans-serif;
     background: linear-gradient(135deg, 
         #0c1a3a 0%, 
         #1e3a8a 25%, 
@@ -22,6 +22,91 @@ body {
     min-height: 100vh;
 }
 
+/* LAYOUT */
+body {
+    display: flex;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    background: #1e3a8a;
+    padding: 25px 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* LOGO */
+.logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+/* MENU */
+.menu {
+    list-style: none;
+    flex: 1;
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.25s;
+    color: #e5e7eb;
+}
+
+/* ICON */
+.menu li i {
+    font-size: 1.1rem;
+}
+
+/* HOVER */
+.menu li:hover {
+    background: #1d4ed8;
+    color: #ffffff;
+}
+
+/* ACTIVE (Dashboard style) */
+.menu .active {
+    background: #2563eb;
+    color: white;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* LOGOUT */
+.logout {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ef4444;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.logout:hover {
+    background: #dc2626;
+}V
+
+/* NAVBAR */ 
+.section-title {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
 /* TITLE */
 .section-title {
     margin-bottom: 15px;

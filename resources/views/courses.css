@@ -5,11 +5,6 @@
     font-family: 'Inter', sans-serif;
 }
 
-{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     font-family: 'Inter', -apple-syste  m, BlinkMacSystemFont, sans-serif;
@@ -66,6 +61,8 @@ body {
 .menu li i {
     font-size: 1.1rem;
 }
+/* ACTIVE ITEM */
+.menu .active
 
 /* HOVER */
 .menu li:hover {
@@ -94,7 +91,7 @@ body {
 
 .logout:hover {
     background: #dc2626;
-}V
+}
 
 /* NAVBAR */ 
 .section-title {

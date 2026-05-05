@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+//import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { useForm, Head } from '@inertiajs/vue3';
 
 // The 'lessons' prop comes directly from your TeacherController index method

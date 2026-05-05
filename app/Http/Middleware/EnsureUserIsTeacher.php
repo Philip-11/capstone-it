@@ -16,7 +16,7 @@ class EnsureUserIsTeacher
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role() === 'teacher'){
+        if (Auth::check() && Auth::user()->role === 'teacher'){
             return $next($request);
         }
 

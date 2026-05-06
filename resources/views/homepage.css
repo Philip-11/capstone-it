@@ -329,3 +329,28 @@ body {
     background: #fee2e2;
     color: #dc2626;
 }
+
+/* AI CHATBOT FLOATING BUTTON */
+.ai-chatbot {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    z-index: 999;
+}
+
+.ai-chatbot:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(135deg, #1e3a8a, #1e40af);
+}

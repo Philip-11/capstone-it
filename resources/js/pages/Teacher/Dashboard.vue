@@ -28,6 +28,10 @@ const submit = () => {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">My Lessons</h2>
         </template>
 
+        <div v-if="$page.props.flash.message" class="bg-green-100 text-green-800 p-4 rounded mb-4">
+            {{ $page.props.flash.message }}
+        </div>
+
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <!-- FORM TO CREATE LESSON -->

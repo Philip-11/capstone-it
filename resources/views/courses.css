@@ -74,14 +74,13 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* LOGOUT */
+/* LOGOUT  */
 .logout {
     display: flex;
     align-items: center;
     gap: 14px;
     padding: 14px;
     border-radius: 12px;
-    background: #ef4444;
     cursor: pointer;
     transition: all 0.25s ease;
 }

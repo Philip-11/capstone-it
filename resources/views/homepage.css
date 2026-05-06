@@ -49,6 +49,7 @@ body {
     margin-bottom: 10px;
     cursor: pointer;
     transition: all 0.25s ease;
+     font-size: 1.1rem;
 }
 
 /* ICON STYLE */
@@ -75,7 +76,6 @@ body {
     gap: 14px;
     padding: 14px;
     border-radius: 12px;
-    background: #ef4444;
     cursor: pointer;
     transition: all 0.25s ease;
 }

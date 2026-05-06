@@ -72,9 +72,9 @@ body {
 .logout {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px;
-    border-radius: 10px;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 12px;
     background: #ef4444;
     cursor: pointer;
     transition: all 0.25s ease;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GLMS Dashboard</title>
+<title>GLMS Courses</title>
 
 <link rel="stylesheet" href="courses.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,28 +11,16 @@
 </head>
 
 <body>
-        
-<body>
 
-<!-- SIDEBAR -->
+    <!-- SIDEBAR -->
 <aside class="sidebar">
-    <div class="sidebar-header">
-        <h2>GLMS</h2>
-    </div>
+    <h2>GLMS</h2>
     
     <ul class="menu">
-        <li>
-            <i class="fa-solid fa-gauge"></i> Dashboard
-        </li>
-        <li class="active" >
-            <i class="fa-solid fa-book-open"></i> My Courses
-        </li>
-        <li>
-            <i class="fa-solid fa-clipboard-check"></i> Assignments
-        </li>
-        <li>
-            <i class="fa-solid fa-user-circle"></i> Profile
-        </li>
+        <li><i class="fa-solid fa-gauge"></i> Dashboard</li>
+        <li class="active"><i class="fa-solid fa-book-open"></i> My Courses</li>
+        <li><i class="fa-solid fa-clipboard-check"></i> Assignments</li>
+        <li><i class="fa-solid fa-user-circle"></i> Profile</li>
     </ul>
     
     <div class="logout">
@@ -40,43 +28,126 @@
     </div>
 </aside>
 
-<!-- MAIN CONTENT -->
 <main class="main-content">
-    
-    <h3 class="section-title">COURSES</h3> 
+
+    <div class="courses-header">
+        <h3>My Courses</h3>
+        <button>+ Browse Catalog</button>
+    </div>
 
     <div class="courses">
+
         <div class="course-card">
-            <h4>Web Development</h4>
-            <p>HTML, CSS, JS</p>
-            <div class="progress-bar">
-                <div class="progress" style="width:0%"></div>
+            <div class="course-banner">
+                <i class="fa-solid fa-laptop-code"></i>
             </div>
-            <button>Continue</button>
+
+            <div class="course-content">
+                <h4>Introduction to Web Development</h4>
+                <p>Learn the fundamentals of web programming</p>
+                <span>Progress 75%</span>
+
+                <div class="progress-bar">
+                    <div class="progress" style="width:75%"></div>
+                </div>
+
+                <button>Continue</button>
+            </div>
         </div>
 
         <div class="course-card">
-            <h4>Programming</h4>
-            <p>Basics of coding</p>
-            <div class="progress-bar">
-                <div class="progress" style="width:0%"></div>
+            <div class="course-banner">
+                <i class="fa-solid fa-code"></i>
             </div>
-            <button>Continue</button>
+
+            <div class="course-content">
+                <h4>Programming Fundamentals</h4>
+                <p>Learn the basics of programming logic</p>
+                <span>Progress 60%</span>
+
+                <div class="progress-bar">
+                    <div class="progress" style="width:60%"></div>
+                </div>
+
+                <button>Continue</button>
+            </div>
         </div>
 
         <div class="course-card">
-            <h4>Database</h4>
-            <p>Learn SQL</p>
-            <div class="progress-bar">
-                <div class="progress" style="width:0%"></div>
+            <div class="course-banner">
+                <i class="fa-solid fa-database"></i>
             </div>
-            <button>Continue</button>
+
+            <div class="course-content">
+                <h4>Database Management</h4>
+                <p>Learn SQL and database design</p>
+                <span>Progress 45%</span>
+
+                <div class="progress-bar">
+                    <div class="progress" style="width:45%"></div>
+                </div>
+
+                <button>Continue</button>
+            </div>
         </div>
+
+        <div class="course-card">
+            <div class="course-banner">
+                <i class="fa-solid fa-palette"></i>
+            </div>
+
+            <div class="course-content">
+                <h4>UI/UX Design</h4>
+                <p>Learn interface and user experience design</p>
+                <span>Progress 50%</span>
+
+                <div class="progress-bar">
+                    <div class="progress" style="width:50%"></div>
+                </div>
+
+                <button>Continue</button>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <div class="course-banner">
+                <i class="fa-solid fa-network-wired"></i>
+            </div>
+
+            <div class="course-content">
+                <h4>Computer Networking</h4>
+                <p>Understand networks and connections</p>
+                <span>Progress 30%</span>
+
+                <div class="progress-bar">
+                    <div class="progress" style="width:30%"></div>
+                </div>
+
+                <button>Continue</button>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <div class="course-banner">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+
+            <div class="course-content">
+                <h4>Cybersecurity Basics</h4>
+                <p>Learn online safety and security concepts</p>
+                <span>Progress 20%</span>
+
+                <div class="progress-bar">
+                    <div class="progress" style="width:20%"></div>
+                </div>
+
+                <button>Continue</button>
+            </div>
+        </div>
+
     </div>
 
 </main>
-
-</body>
 
 </body>
 </html>

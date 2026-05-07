@@ -34,6 +34,33 @@ class TeacherController extends Controller
         return redirect()->back()->with('message', 'Lesson created!');
     }
 
+    public function updateLesson(Request $request, Lesson $lesson)
+    {
+        if ($lesson->user_id !== Auth::id()){
+            abort(403, 'Unauthorized Action');
+        }
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string|min:10',
+        ]);
+
+        $lesson->update($validated);
+
+        return redirect()->back()->with('message', 'Lesson updated successfully');
+    }
+
+    public function destroyLesson(Lesson $lesson){
+        //Make sure the right teacher is deleting their own lesson
+        if ($lesson->user_id !== Auth::id()){
+            abort(403, 'Unauthorized Action');
+        }
+
+        $lesson->delete();
+
+        return redirect()->back()->with('message', 'Lesson deleted successfully');
+    }
+
 
     public function storeQuiz(Request $request, Lesson $lesson)
     {

@@ -17,6 +17,9 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->gr
 
     Route::post('/teacher/lessons', [TeacherController::class, 'storeLesson'])->name('teacher.lessons.store');
 
-    Route::post('/teacher/lesson/{lesson}/quiz', [TeacherController::class, 'storeQuiz'])->name('teacher.quiz.store');
+    Route::post('/teacher/lessons/{lesson}/quiz', [TeacherController::class, 'storeQuiz'])->name('teacher.quiz.store');
 
+    Route::put('/teacher/lessons/{lesson}', [TeacherController::class, 'updateLesson'])->name('teacher.lessons.update');
+
+    Route::delete('/teacher/lessons/{lesson}', [TeacherController::class, 'destroyLesson'])->name('teacher.lessons.destroy');
 });

@@ -32,6 +32,13 @@ class DatabaseSeeder extends Seeder
             'role' => 'teacher',
         ]);
 
+        User::create([
+            'name' => 'Student',
+            'email' => 'student@example.com',
+            'password' => bcrypt('password'),
+            'role' => 'student,'
+        ]);
+
         Subject::create([
             'name' => 'Web Development',
             'subject_code' => 'WEB101',

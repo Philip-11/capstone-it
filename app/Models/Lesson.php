@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Lesson extends Model
 {
-    protected $fillable = ['user_id', 'title', 'slug', 'description', 'content', 'video_url', 'order', 'is_published'];
+    protected $fillable = ['user_id', 'title', 'slug', 'description', 'content', 'video_url', 'order', 'is_published', 'file_path', 'file_name'];
 
     // The Teacher who created the lesson
     public function teacher(): BelongsTo

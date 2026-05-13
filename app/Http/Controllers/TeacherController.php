@@ -20,18 +20,37 @@ class TeacherController extends Controller
 
     public function storeLesson(Request $request)
     {
+        // 1. Validation - Use $validated to ensure you only use safe data
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            // Make document required if you don't want empty lessons
+            'document' => 'required|file|mimes:pdf,ppt,pptx|max:20480', 
         ]);
 
-        Auth::user()->lessons()->create([
-            'title' => $validated['title'],
-            'slug' => Str::slug($validated['title']),
+        // 2. Prepare the base data
+        $data = [
+            'user_id' => Auth::id(),
+            'title'   => $validated['title'],
+            'slug'    => Str::slug($validated['title']),
             'content' => $validated['content'],
-        ]);
+        ];
 
-        return redirect()->back()->with('message', 'Lesson created!');
+        // 3. Handle the file storage
+        if ($request->hasFile('document')) {
+            $file = $request->file('document');
+            
+            // This creates a path like: lessons/abc123filename.pdf
+            $path = $file->store('lessons', 'public');
+            
+            $data['file_path'] = $path;
+            $data['file_name'] = $file->getClientOriginalName();
+        }
+
+        // 4. Create the record
+        Lesson::create($data);
+
+        return redirect()->back()->with('message', 'Lesson created successfully!');
     }
 
     public function updateLesson(Request $request, Lesson $lesson)

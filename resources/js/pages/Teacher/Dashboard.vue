@@ -11,22 +11,39 @@ const props = defineProps({
 //State to check if we're editing
 const isEditing = ref(false);
 const currentLessonId = ref(null);
+const fileInput = ref(null);
 
 // Inertia's form helper handles CSRF tokens and loading states automatically
 const form = useForm({
     title: '',
     content: '',
+    document: null,
 });
 
+const onFileChange = (e) => {
+    form.document = e.target.files[0];
+    console.log("File attached to form:", form.document);
+}
+
 const submit = () => {
+    console.log("Current file in form: ", form.document);
     if (isEditing.value){
-        //PUT for updates
-        form.put(route('teacher.lessons.update', currentLessonId.value), {
+        form.transform((data) => ({
+            ...data,
+            _method: 'PUT',
+        })).post(route('teacher.lessons.update', currentLessonId.value), {
+            forceFormData: true,
             onSuccess: () => cancelEdit(),
         });
     } else {
         form.post(route('teacher.lessons.store'), {
-            onSuccess: () => form.reset(), // Clear the form after saving
+            forceFormData: true,
+            onSuccess: () => {
+                form.reset(); // Clear the form after saving
+                if (fileInput.value) {
+                    fileInput.value.value = null;
+                }
+            }
         });
     }
     
@@ -82,6 +99,20 @@ const deleteLesson = (lesson) => {
                             <textarea v-model="form.content" placeholder="Write your lesson here..." class="w-full border-gray-300 rounded-md"></textarea>
                             <div v-if="form.errors.content" class="text-red-500 text-sm">{{ form.errors.content }}</div>
                         </div>
+
+                        <input 
+                            type="file" 
+                            @input="form.document = $event.target.files[0]"
+                            ref="fileInput" 
+                            @change="onFileChange"
+                            accept=".pdf,.ppt,.pptx"
+                            class="block w-full text-sm text-gray-500"
+                        />
+                        
+                        <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                            {{ form.progress.percentage }}%
+                        </progress>
+                        <div v-if="form.errors.document" class="text-red-500 text-sm">{{ form.errors.document }}</div>
                         <!-- <button type="submit" :disabled="form.processing" class="bg-blue-500 text-white px-4 py-2 rounded">
                             {{ form.processing ? 'Saving...' : 'Save Lesson' }}
                         </button> -->
@@ -101,6 +132,13 @@ const deleteLesson = (lesson) => {
                     <div v-for="lesson in lessons" :key="lesson.id" class="border-b py-2">
                         <span class="font-medium">{{ lesson.title }}</span>
                         <span v-if="lesson.quiz" class="ml-4 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Has Quiz</span>
+                        <div v-if="lesson.file_path" class="mt-2">
+                            <span class="text-xs text-gray-500">Attachment: {{ lesson.file_name }}</span>
+
+                            <button @click="processAI(lesson.id)" class="ml-2 bg-purple-500 text-white text-xs px-2 py-1 rounded">
+                                Generate AI Summary
+                            </button>
+                        </div>
                         <button @click="startEdit(lesson)" class="ml-4 text-blue-500 underline">Edit</button>
                         <button @click="deleteLesson(lesson)" class="bg-red-500 text-white ml-4 px-4 py-2 rounded">Delete</button>
                     </div>

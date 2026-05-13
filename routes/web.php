@@ -35,4 +35,6 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->gr
 Route::middleware(['auth'])->group(function () {
     Route::get('/student/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
     Route::post('/student/join-subject', [StudentController::class, 'joinSubject'])->name('student.join');
+
+    Route::get('/student/subjects/{subject}', [StudentController::class, 'showSubject'])->name('student.subjects.show');
 });

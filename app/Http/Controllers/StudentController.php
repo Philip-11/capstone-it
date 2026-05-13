@@ -30,6 +30,16 @@ class StudentController extends Controller
         return redirect()->back()->with('message', "Succesfully joined {$subject->name}!");
     }
 
+    public function showSubject(Subject $subject){
+        if (!$subject->students->contains(Auth::id())) {
+            abort(403, "You are not enrolled in this subject");
+        }
+
+        return Inertia::render('Student/SubjectView', [
+            'subject' => $subject->load(['lessons.quiz', 'teacher']),
+        ]);
+    }
+
     public function showLesson($id){
 
     }

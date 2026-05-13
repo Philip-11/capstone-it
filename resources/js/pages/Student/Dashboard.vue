@@ -36,7 +36,7 @@ const join = () => {
             <div v-for="subject in joinedSubjects" :key="subject.id" class="bg-white p-4 rounded shadow border-l-4 border-blue-500">
                 <h3 class="font-bold text-lg">{{ subject.name }}</h3>
                 <p class="text-gray-600 text-sm">Instructor: {{ subject.teacher.name }}</p>
-                <button class="mt-4 text-blue-500 font-semibold">View Lessons →</button>
+                <a :href="route('student.subjects.show', subject.id)" class="mt-4 text-blue-500 font-semibold">View Lessons →</a>
             </div>
             <div v-if="joinedSubjects.length === 0" class="text-gray-500">
                 You haven't joined any subjects yet.

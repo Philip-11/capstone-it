@@ -28,10 +28,43 @@ body {
     flex-direction: column;
 }
 
-.sidebar h2 {
-    margin-bottom: 30px;
+/* SIDEBAR HEADER */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 35px;
 }
 
+/* LOGO LINK */
+.sidebar-header a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* SCHOOL LOGO */
+.school-logo {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
+    transition: 0.25s ease;
+}
+
+.school-logo:hover {
+    transform: scale(1.08);
+}
+
+/* TITLE */
+.sidebar-header h2 {
+    color: white;
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+/* MENU */
 .menu {
     list-style: none;
     flex: 1;
@@ -61,14 +94,13 @@ body {
     padding: 14px;
     border-radius: 12px;
     cursor: pointer;
-     transition: all 0.25s ease;
+    transition: all 0.25s ease;
 }
 
 .logout:hover {
     background: #dc2626;
     transform: translateX(5px);
 }
-
 
 /* MAIN */
 .main-content {

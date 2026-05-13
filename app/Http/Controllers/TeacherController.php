@@ -6,6 +6,7 @@ use App\Models\Lesson;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
@@ -53,20 +54,34 @@ class TeacherController extends Controller
         return redirect()->back()->with('message', 'Lesson created successfully!');
     }
 
-    public function updateLesson(Request $request, Lesson $lesson)
+    public function updateLesson(Request $request, $id)
     {
-        if ($lesson->user_id !== Auth::id()){
-            abort(403, 'Unauthorized Action');
-        }
+        $lesson = Lesson::findOrFail($id);
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'required|string|min:10',
+            'content' => 'required|string',
+            'document' => 'nullable|file|mimes:pdf,ppt,pptx|max:20480', 
         ]);
 
-        $lesson->update($validated);
+        $lesson->title = $validated['title'];
+        $lesson->content = $validated['content'];
+        $lesson->slug = Str::slug($validated['title']);
 
-        return redirect()->back()->with('message', 'Lesson updated successfully');
+        if ($request->hasFile('document')) {
+            // Optional: Delete old file so you don't waste space
+            if ($lesson->file_path) {
+                Storage::disk('public')->delete($lesson->file_path);
+            }
+
+            $path = $request->file('document')->store('lessons', 'public');
+            $lesson->file_path = $path;
+            $lesson->file_name = $request->file('document')->getClientOriginalName();
+        }
+
+        $lesson->save();
+
+        return redirect()->back()->with('message', 'Lesson updated!');
     }
 
     public function destroyLesson(Lesson $lesson){

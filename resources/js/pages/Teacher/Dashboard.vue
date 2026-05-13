@@ -33,7 +33,12 @@ const submit = () => {
             _method: 'PUT',
         })).post(route('teacher.lessons.update', currentLessonId.value), {
             forceFormData: true,
-            onSuccess: () => cancelEdit(),
+            onSuccess: () => {
+                cancelEdit();
+                if (fileInput.value) {
+                    fileInput.value.value = null;
+                }
+            }
         });
     } else {
         form.post(route('teacher.lessons.store'), {

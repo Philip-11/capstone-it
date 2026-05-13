@@ -144,6 +144,14 @@ const deleteLesson = (lesson) => {
                                 Generate AI Summary
                             </button>
                         </div>
+                        <div class="flex gap-2">
+                        <a :href="route('teacher.lessons.download', lesson.id)"
+                            class="btn-download"
+                            target="_blank"
+                        >
+                            Download
+                        </a>
+                        </div>
                         <button @click="startEdit(lesson)" class="ml-4 text-blue-500 underline">Edit</button>
                         <button @click="deleteLesson(lesson)" class="bg-red-500 text-white ml-4 px-4 py-2 rounded">Delete</button>
                     </div>

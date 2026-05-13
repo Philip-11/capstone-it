@@ -90,9 +90,35 @@ class TeacherController extends Controller
             abort(403, 'Unauthorized Action');
         }
 
+        if ($lesson->file_path){
+            Storage::disk('public')->delete($lesson->file_path);
+        }
+
         $lesson->delete();
 
         return redirect()->back()->with('message', 'Lesson deleted successfully');
+    }
+
+    public function downloadLesson(Lesson $lesson){
+        if ($lesson->user_id !== Auth::id()){
+            abort(403);
+        }
+
+        // $path = storage_path('app/public' . $lesson->file_path);
+
+        // dd($path);
+
+        // if (!file_exists($path)){
+        //     return redirect()->back()->withErrors(['error' => 'File no longer exists on the server']);
+        // }
+
+        // return response()->download($path, $lesson->file_name);
+
+        if (!Storage::disk('public')->exists($lesson->file_path)){
+            dd("File NOT FOUND in storage/app/public/" . $lesson->file_path);
+        }
+
+        return Storage::disk('public')->download($lesson->file_path, $lesson->file_name);
     }
 
 

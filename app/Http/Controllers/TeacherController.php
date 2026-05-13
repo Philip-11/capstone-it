@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lesson;
 use App\Models\Quiz;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -12,10 +13,12 @@ use Illuminate\Support\Str;
 
 class TeacherController extends Controller
 {
+
     public function index()
     {
         return Inertia::render('Teacher/Dashboard', [
-            'lessons' => Auth::user()->lessons()->with('quiz')->latest()->get(),
+            'lessons' => Auth::user()->lessons()->with('quiz', 'subject')->latest()->get(),
+            'subjects' => Subject::where('user_id', '=', Auth::user()->id)->get(),
         ]);
     }
 
@@ -25,8 +28,9 @@ class TeacherController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            'subject_id' => 'required|exists:subjects,id',
             // Make document required if you don't want empty lessons
-            'document' => 'required|file|mimes:pdf,ppt,pptx|max:20480', 
+            'document' => 'nullable|file|mimes:pdf,ppt,pptx|max:20480', 
         ]);
 
         // 2. Prepare the base data
@@ -35,6 +39,9 @@ class TeacherController extends Controller
             'title'   => $validated['title'],
             'slug'    => Str::slug($validated['title']),
             'content' => $validated['content'],
+            'subject_id' => $request->subject_id, 
+            'file_path' => $path ?? null,
+            'file_name' => $originalName ?? null,
         ];
 
         // 3. Handle the file storage
@@ -51,7 +58,7 @@ class TeacherController extends Controller
         // 4. Create the record
         Lesson::create($data);
 
-        return redirect()->back()->with('message', 'Lesson created successfully!');
+        return redirect()->back()->with('message', 'Lesson uploaded to subject!');
     }
 
     public function updateLesson(Request $request, $id)
@@ -162,6 +169,30 @@ class TeacherController extends Controller
         return Inertia::render('Teacher/StudentProgress', [
             'reports' => \App\Models\Report::with('student')->latest()->get()
         ]);
+    }
+
+    public function indexSubjects()
+    {
+        $subjects = Subject::where('user_id', '=', Auth::id())->latest()->get();
+
+        return Inertia::render('Teacher/Subjects', [
+            'subjects' => $subjects
+        ]);
+    }
+
+    public function storeSubject(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        Subject::create([
+            'name' => $request->name,
+            'subject_code' => strtoupper(Str::random(6)),
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect()->back()->with('message', 'Subject created successfully');
     }
 
 }

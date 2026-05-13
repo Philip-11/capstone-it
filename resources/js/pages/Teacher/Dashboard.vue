@@ -5,7 +5,8 @@ import { ref } from 'vue';
 
 // The 'lessons' prop comes directly from your TeacherController index method
 const props = defineProps({
-    lessons: Array
+    lessons: Array,
+    subjects: Array,
 });
 
 //State to check if we're editing
@@ -17,6 +18,7 @@ const fileInput = ref(null);
 const form = useForm({
     title: '',
     content: '',
+    subject_id: '',
     document: null,
 });
 
@@ -103,6 +105,19 @@ const deleteLesson = (lesson) => {
                         <div>
                             <textarea v-model="form.content" placeholder="Write your lesson here..." class="w-full border-gray-300 rounded-md"></textarea>
                             <div v-if="form.errors.content" class="text-red-500 text-sm">{{ form.errors.content }}</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Assign to Subject</label>
+                            <select v-model="form.subject_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                <option value="" disabled>-- Select Subject --</option>
+                                <option v-for="subject in subjects" :key="subject.id" :value="subject.id">
+                                    {{ subject.name }} ({{ subject.subject_code }})
+                                </option>
+                            </select>
+                            <div v-if="form.errors.subject_id" class="text-red-500 text-xs mt-1">
+                                {{ form.errors.subject_id }}
+                            </div>
                         </div>
 
                         <input 

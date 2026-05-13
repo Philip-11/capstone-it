@@ -12,6 +12,10 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->group(function () {
 
+    //Subject routes
+    Route::get('/teacher/subjects', [TeacherController::class, 'indexSubjects'])->name('teacher.subjects.index');
+    Route::post('/teacher/subjects', [TeacherController::class, 'storeSubject'])->name('teacher.subjects.store');
+
     //Teacher dashboard
     Route::get('/teacher/lessons', [TeacherController::class, 'index'])->name('teacher.lessons.name');
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,10 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->gr
     Route::delete('/teacher/lessons/{lesson}', [TeacherController::class, 'destroyLesson'])->name('teacher.lessons.destroy');
 
     Route::get('/lessons/{lesson}/download', [TeacherController::class, 'downloadLesson'])->name('teacher.lessons.download');
+});
+
+//Student Route
+Route::middleware(['auth'])->group(function () {
+    Route::get('/student/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
+    Route::post('/student/join-subject', [StudentController::class, 'joinSubject'])->name('student.join');
 });

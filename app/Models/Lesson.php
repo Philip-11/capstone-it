@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,7 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Lesson extends Model
 {
-    protected $fillable = ['user_id', 'title', 'slug', 'description', 'content', 'video_url', 'order', 'is_published', 'file_path', 'file_name'];
+    use HasFactory;
+
+    protected $fillable = ['user_id', 'title', 'slug', 'description', 'content', 'video_url', 'order', 'is_published', 'file_path', 'file_name', 'user_id', 'subject_id'];
 
     // The Teacher who created the lesson
     public function teacher(): BelongsTo
@@ -27,5 +30,10 @@ class Lesson extends Model
     public function progressLogs(): HasMany
     {
         return $this->hasMany(Progress::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
     }
 }

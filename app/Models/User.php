@@ -70,7 +70,16 @@ class User extends Authenticatable
         return $this->hasMany(Report::class);
     }
 
+    //For teacher: to see the lessons the teacher made
+    public function managedSubjects(): HasMany
+    {
+        return $this->hasMany(Subject::class);
+    }
 
+    public function joinedSubjects()
+    {
+        return $this->belongsToMany(Subject::class, 'subject_student');
+    }
 
 
 }

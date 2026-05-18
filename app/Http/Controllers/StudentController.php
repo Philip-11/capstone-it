@@ -57,11 +57,6 @@ class StudentController extends Controller
         ]);
     }
 
-    public function strclean($string)
-    {
-        return strtolower(trim($string));
-    }
-
     public function submitQuiz(Request $request, Quiz $quiz)
     {
         //'answers' is an array from vue
@@ -71,12 +66,12 @@ class StudentController extends Controller
         $score = 0;
 
         //take all the questions with answers for checking
-        $questions = $quiz->questions();
+        $questions = $quiz->questions;
 
         foreach ($questions as $question){
             $studentAnswer = $studentAnswers[$question->id] ?? null;
             //compare the student's answer to correct answer
-            if (strclean($studentAnswer) === strclean($question->correct_answer)) {
+            if (strtolower(trim($studentAnswer)) === strtolower(trim($question->correct_answer))) {
                 $score += $question->points;
             }
         }

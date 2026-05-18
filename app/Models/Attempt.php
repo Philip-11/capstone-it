@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Attempt extends Model
 {
-    protected $fillable = ['user_id', 'quiz_id', 'score', 'total_questions', 'completed_at'];
+    protected $fillable = ['user_id', 'quiz_id', 'score', 'total_questions', 'student_answers' ,'completed_at'];
+    protected $casts = [
+        'student_answers' => 'array',
+        'completed_at' => 'datetime',
+    ];
 
     //To link back to the student
     public function student(): BelongsTo

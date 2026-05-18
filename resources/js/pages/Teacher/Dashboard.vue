@@ -92,6 +92,13 @@ const deleteLesson = (lesson) => {
         </div>
 
         <div class="py-12">
+            <a 
+                :href="route('teacher.quizzes.index')" 
+                class="block px-4 py-2 rounded text-gray-600 hover:bg-gray-100 hover:text-gray-900 font-medium"
+                :class="{ 'bg-blue-50 text-blue-700': route().current('teacher.quizzes.*') }"
+            >
+                📝 Manage Quizzes
+            </a>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <!-- FORM TO CREATE LESSON -->
                 <div class="bg-white p-6 overflow-hidden shadow-sm sm:rounded-lg mb-6">

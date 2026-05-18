@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,13 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->gr
     Route::delete('/teacher/lessons/{lesson}', [TeacherController::class, 'destroyLesson'])->name('teacher.lessons.destroy');
 
     Route::get('/lessons/{lesson}/download', [TeacherController::class, 'downloadLesson'])->name('teacher.lessons.download');
+
+    Route::get('/teacher/quizzes', [QuizController::class, 'index'])->name('teacher.quizzes.index');
+    Route::get('/teacher/quizzes/create', [QuizController::class, 'create'])->name('teacher.quizzes.create');
+    Route::post('/teacher/quizzes', [QuizController::class, 'store'])->name('teacher.quizzes.store');
+    Route::get('/teacher/quizzes/{quiz}/edit', [QuizController::class, 'edit'])->name('teacher.quizzes.edit');
+    Route::put('/teacher/quizzes/{quiz}', [QuizController::class, 'update'])->name('teacher.quizzes.update');
+    Route::delete('/teacher/quizzes/{quiz}', [QuizController::class, 'destroy'])->name('teacher.quizzes.destroy');
 });
 
 //Student Route

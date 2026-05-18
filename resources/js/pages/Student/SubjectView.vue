@@ -24,6 +24,10 @@ const props = defineProps({
                        class="bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm font-medium">
                         Download File
                     </a>
+
+                    <Link v-if="lesson.quiz" :href="route('student.quiz.show', lesson.quiz.id)" class="bg-purple-600 text-white px-3 py-1 rounded text-sm font-medium hover:bg-purple-700">
+                        Take Quiz
+                    </Link>
                 </div>
             </div>
 

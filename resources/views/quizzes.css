@@ -1,0 +1,363 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(
+        135deg,
+        #0c1a3a 0%,
+        #1e3a8a 25%,
+        #1e40af 50%,
+        #1d4ed8 75%,
+        #3730a3 100%
+    );
+    min-height: 100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 230px;
+    height: 100vh;
+    background: #1e3a8a;
+    color: white;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* SIDEBAR HEADER */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+/* SCHOOL LOGO */
+.school-logo {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
+/* GLMS TITLE */
+.sidebar-header h2 {
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* MENU */
+.menu {
+    list-style: none;
+    flex: 1;
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 11px 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 0.96rem;
+    font-weight: 500;
+}
+
+.menu li i {
+    font-size: 1rem;
+    width: 18px;
+    text-align: center;
+}
+
+.menu li:hover,
+.menu .active {
+    background: #1d4ed8;
+    transform: translateX(5px);
+}
+
+/* LOGOUT */
+.logout {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.logout:hover {
+    background: #dc2626;
+    transform: translateX(5px);
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+.main-content {
+    margin-left: 230px;
+    padding: 28px;
+    width: calc(100% - 230px);
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+.page-header {
+    background: white;
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.page-header h3 {
+    color: #1e3a8a;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.page-header p {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+.assessment-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+/* =========================
+   CARDS
+========================= */
+.form-card,
+.list-card {
+    background: white;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin-bottom: 22px;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.card-title h3 {
+    color: #1e3a8a;
+    font-size: 1.08rem;
+    font-weight: 700;
+}
+
+.card-title i {
+    color: #1d4ed8;
+    font-size: 1rem;
+}
+
+/* =========================
+   FORM
+========================= */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    color: #374151;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.form-group input + input {
+    margin-top: 8px;
+}
+
+.form-group textarea {
+    min-height: 95px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.18);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.primary-btn {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    color: white;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.primary-btn:hover {
+    background: linear-gradient(135deg, #1e3a8a, #1e40af);
+}
+
+/* =========================
+   EXISTING LIST
+========================= */
+.assessment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e5e7eb;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: 0.2s ease;
+}
+
+.assessment-item:hover {
+    background: #f9fafb;
+}
+
+.assessment-item h4 {
+    color: #1e3a8a;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.assessment-item p {
+    color: #6b7280;
+    font-size: 0.83rem;
+}
+
+/* ACTION BUTTONS */
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.actions button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.edit-btn {
+    background: #1d4ed8;
+}
+
+.edit-btn:hover {
+    background: #1e40af;
+}
+
+.delete-btn {
+    background: #ef4444;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 1000px) {
+
+    .assessment-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        width: 200px;
+        padding: 16px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+        padding: 20px;
+    }
+
+    .menu li {
+        font-size: 0.9rem;
+    }
+
+    .assessment-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .actions {
+        width: 100%;
+    }
+
+    .actions button {
+        flex: 1;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 15px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

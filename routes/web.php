@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\AssignmentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -37,6 +38,13 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->gr
     Route::get('/teacher/quizzes/{quiz}/edit', [QuizController::class, 'edit'])->name('teacher.quizzes.edit');
     Route::put('/teacher/quizzes/{quiz}', [QuizController::class, 'update'])->name('teacher.quizzes.update');
     Route::delete('/teacher/quizzes/{quiz}', [QuizController::class, 'destroy'])->name('teacher.quizzes.destroy');
+
+    Route::get('/teacher/assignments', [AssignmentController::class, 'index'])->name('teacher.assignments.index');
+    Route::get('/teacher/assignments/create', [AssignmentController::class, 'create'])->name('teacher.assignments.create');
+    Route::post('/teacher/assignments', [AssignmentController::class, 'store'])->name('teacher.assignments.store');
+    Route::get('/teacher/assignments/{assignment}/edit', [AssignmentController::class, 'edit'])->name('teacher.assignments.edit');
+    Route::put('/teacher/assignments/{assignment}', [AssignmentController::class, 'update'])->name('teacher.assignments.update');
+    Route::delete('/teacher/assignments/{assignment}', [AssignmentController::class, 'destroy'])->name('teacher.assignments.destroy');
 });
 
 //Student Route

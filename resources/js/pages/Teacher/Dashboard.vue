@@ -99,6 +99,10 @@ const deleteLesson = (lesson) => {
             >
                 📝 Manage Quizzes
             </a>
+
+            <a :href="route('teacher.assignments.index')" class="bg-purple-600 text-white px-4 py-2 rounded">
+                💼 Manage Activities
+            </a>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <!-- FORM TO CREATE LESSON -->
                 <div class="bg-white p-6 overflow-hidden shadow-sm sm:rounded-lg mb-6">

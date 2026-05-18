@@ -90,7 +90,13 @@ class StudentController extends Controller
             'completed_at' => now(),
         ]);
 
-        return redirect()->route('student.subjects.show', $quiz->lesson->subject_id)
+        //Check if there's a lesson
+        if ($quiz->lesson){
+            return redirect()->route('student.subjects.show', $quiz->lesson->subject_id)
+                ->with('message', 'Quiz Submitted!');
+        }
+
+        return redirect()->route('student.dashboard')
             ->with('message', 'Quiz submitted!');
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attempt;
 use App\Models\Lesson;
 use App\Models\Quiz;
 use App\Models\Subject;
@@ -16,9 +17,22 @@ class TeacherController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
+
+        $lessons = $user->lessons()->with('quiz', 'subject')->latest()->get();
+        $subjects = Subject::where('user_id', '=', $user->id)->get();
+
+        $quizAttempts = Attempt::whereHas('quiz', function($query) use ($user){
+            $query->where('user_id', $user->id);
+        })
+        ->with(['student', 'quiz'])
+        ->latest()
+        ->get();
+
         return Inertia::render('Teacher/Dashboard', [
-            'lessons' => Auth::user()->lessons()->with('quiz', 'subject')->latest()->get(),
-            'subjects' => Subject::where('user_id', '=', Auth::user()->id)->get(),
+            'lessons' => $lessons,
+            'subjects' => $subjects,
+            'quizAttempts' => $quizAttempts,
         ]);
     }
 

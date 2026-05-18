@@ -7,6 +7,7 @@ import { ref } from 'vue';
 const props = defineProps({
     lessons: Array,
     subjects: Array,
+    quizAttempts: Array,
 });
 
 //State to check if we're editing
@@ -171,6 +172,54 @@ const deleteLesson = (lesson) => {
                         <button @click="deleteLesson(lesson)" class="bg-red-500 text-white ml-4 px-4 py-2 rounded">Delete</button>
                     </div>
                 </div>
+
+                <div class="mt-12 bg-white p-6 rounded-lg shadow-sm border">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">🏆 Student Quiz Results</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase">Student Name</th>
+                                <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase">Quiz Title</th>
+                                <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase">Score</th>
+                                <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase">Percentage</th>
+                                <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase">Date Taken</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            <tr v-for="attempt in quizAttempts" :key="attempt.id" class="hover:bg-gray-50">
+                                <td class="px-6 py-4 font-medium text-gray-900">{{ attempt.student?.name }}</td>
+                                
+                                <td class="px-6 py-4 text-gray-600">{{ attempt.quiz?.title }}</td>
+                                
+                                <td class="px-6 py-4 font-semibold">
+                                    {{ attempt.score }} / {{ attempt.total_questions }}
+                                </td>
+                                
+                                <td class="px-6 py-4">
+                                    <span 
+                                        class="px-2 py-1 rounded text-xs font-bold"
+                                        :class="(attempt.score / attempt.total_questions) * 100 >= 70 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
+                                    >
+                                        {{ Math.round((attempt.score / attempt.total_questions) * 100) }}%
+                                    </span>
+                                </td>
+                                
+                                <td class="px-6 py-4 text-gray-500">
+                                    {{ new Date(attempt.completed_at).toLocaleDateString() }}
+                                </td>
+                            </tr>
+                            
+                            <tr v-if="quizAttempts.length === 0">
+                                <td colspan="5" class="px-6 py-8 text-center text-gray-500 italic">
+                                    No students have taken any quizzes yet.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             </div>
         </div>
     </AuthenticatedLayout>

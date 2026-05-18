@@ -37,4 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/student/join-subject', [StudentController::class, 'joinSubject'])->name('student.join');
 
     Route::get('/student/subjects/{subject}', [StudentController::class, 'showSubject'])->name('student.subjects.show');
+
+    Route::get('/student/quiz/{quiz}', [StudentController::class, 'showQuiz'])->name('student.quiz.show');
+    Route::post('/student/quiz/{quiz}/submit', [StudentController::class, 'submitQuiz'])->name('student.quiz.submit');
 });

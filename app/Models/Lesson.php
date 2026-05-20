@@ -36,4 +36,9 @@ class Lesson extends Model
     {
         return $this->belongsTo(Subject::class);
     }
+
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(Assignment::class);
+    }
 }

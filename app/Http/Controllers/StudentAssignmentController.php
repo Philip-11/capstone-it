@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Assignment;
+use App\Models\AssignmentSubmission;
+use Auth;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class StudentAssignmentController extends Controller
+{
+    public function show(Assignment $assignment)
+    {
+        $assignment->load('lesson');
+
+        $existingSubmission = AssignmentSubmission::where('assignment_id', $assignment->id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        return Inertia::render('Student/Assignments/Show', [
+            'assignment' => $assignment,
+            'submission' => $existingSubmission,
+        ]); 
+    }
+
+    public function submit(Request $request, Assignment $assignment)
+    {
+        $request->validate([
+            'submission_text' => 'nullable|string',
+            'file' => 'nullable|file|mimes:pdf,docx,doc,zip,png,jpg|max:5120',
+        ]);
+
+        $filePath = null;
+
+        if ($request->hasFile('file')){
+            $filePath = $request->file('file')->store('submissions', 'public');
+        }
+
+        AssignmentSubmission::updateOrCreate(
+            [
+                'assignment_id' => $assignment->id,
+                'user_id' => Auth::id(),
+            ],
+            [
+                'submission_text' => $request->submission_text,
+                'file_path' => $filePath ?? $request->old_file_path, //the old file stays if theres no new upload
+                'submitted_at' => now(),
+            ]
+        );
+
+        return redirect()->route('student.subjects.show', $assignment->lesson->subject_id)
+            ->with('message', 'Assignment/Activity Submitted Successfully');
+    }
+}

@@ -2,9 +2,43 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Lesson extends Model
 {
-    //
+    use HasFactory;
+
+    protected $fillable = ['user_id', 'title', 'slug', 'description', 'content', 'video_url', 'order', 'is_published', 'file_path', 'file_name', 'user_id', 'subject_id'];
+
+    // The Teacher who created the lesson
+    public function teacher(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // A lesson can have one quiz attached to it
+    public function quiz(): HasOne
+    {
+        return $this->hasOne(Quiz::class);
+    }
+
+    // Tracking how many students have interacted with this lesson
+    public function progressLogs(): HasMany
+    {
+        return $this->hasMany(Progress::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(Assignment::class);
+    }
 }

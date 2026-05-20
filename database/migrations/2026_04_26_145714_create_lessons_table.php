@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
+            $table->longText('content'); // The actual lesson body
+            $table->string('video_url')->nullable(); // If you want to embed YouTube/Vimeo
+            $table->integer('order')->default(0); // To arrange lessons in sequence
+            $table->boolean('is_published')->default(false);
             $table->timestamps();
         });
     }

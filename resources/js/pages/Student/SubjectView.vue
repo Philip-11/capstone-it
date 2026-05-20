@@ -28,6 +28,19 @@ const props = defineProps({
                     <a v-if="lesson.quiz" :href="route('student.quiz.show', lesson.quiz.id)" class="bg-purple-600 text-white px-3 py-1 rounded text-sm font-medium hover:bg-purple-700">
                         Take Quiz
                     </a>
+
+                    <div v-if="lesson.assignments && lesson.assignments.length > 0" class="space-y-2">
+                        <div v-for="assignment in lesson.assignments" :key="assignment.id" class="flex justify-between items-center bg-purple-50 p-3 rounded">
+                            <div>
+                                <span class="text-sm font-medium text-purple-800">💼 Activity: {{ assignment.title }}</span>
+                                <span class="block text-xs text-purple-600">Max Points: {{ assignment.max_points }}</span>
+                            </div>
+                            
+                            <a :href="route('student.assignments.show', assignment.id)" class="bg-purple-600 text-white text-xs px-3 py-1 rounded">
+                                Open Assignment
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 

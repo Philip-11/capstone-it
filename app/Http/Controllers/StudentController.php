@@ -37,8 +37,15 @@ class StudentController extends Controller
             abort(403, "You are not enrolled in this subject");
         }
 
+        $subject->load([
+            'teacher',
+            'lessons' => function($query){
+                $query->with(['quiz', 'assignments'])->latest();
+            }
+        ]);
+
         return Inertia::render('Student/SubjectView', [
-            'subject' => $subject->load(['lessons.quiz', 'teacher']),
+            'subject' => $subject,
         ]);
     }
 

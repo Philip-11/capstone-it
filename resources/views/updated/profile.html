@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLMS Profile</title>
+
+<link rel="stylesheet" href="profile.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<header class="top-navbar">
+    <div class="brand">
+        <a href="sdashboard.html">
+            <img src="LOGO.png" alt="School Logo">
+        </a>
+        <h2>GLMS</h2>
+    </div>
+
+    <nav class="nav-links">
+        <a href="sdashboard.html">Dashboard</a>
+        <a href="courses.html">My Courses</a>
+        <a href="assignments.html">Assignments</a>
+        <a href="profile.html" class="active">Profile</a>
+    </nav>
+
+    <a href="login.html" class="logout-btn">
+        Logout
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </a>
+</header>
+
+<div class="ai-chatbot">
+    <i class="fa-solid fa-robot"></i>
+</div>
+
+<main class="main-content">
+
+    <section class="profile-hero">
+        <span class="badge">Student Profile</span>
+        <h1>My Profile</h1>
+        <p>View your personal information, academic progress, and account settings.</p>
+        <button>Edit Profile</button>
+    </section>
+
+    <section class="profile-card">
+        <div class="profile-avatar">
+            <i class="fa-solid fa-user"></i>
+        </div>
+
+        <div class="profile-info">
+            <h2>Jessie Vash</h2>
+            <p>BS Information Technology</p>
+
+            <div class="info-grid">
+                <div>
+                    <span>Student ID</span>
+                    <strong>2025-00123</strong>
+                </div>
+
+                <div>
+                    <span>Year & Section</span>
+                    <strong>3rd Year - Section A</strong>
+                </div>
+
+                <div>
+                    <span>Email</span>
+                    <strong>student@glms.edu</strong>
+                </div>
+
+                <div>
+                    <span>Contact Number</span>
+                    <strong>0912 345 6789</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="overview-section">
+        <div class="section-header">
+            <h3>Academic Overview</h3>
+        </div>
+
+        <div class="overview-cards">
+            <div class="overview-card">
+                <i class="fa-solid fa-book-open"></i>
+                <h4>Enrolled Courses</h4>
+                <p>7</p>
+            </div>
+
+            <div class="overview-card">
+                <i class="fa-solid fa-circle-check"></i>
+                <h4>Completed Courses</h4>
+                <p>4</p>
+            </div>
+
+            <div class="overview-card">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <h4>Pending Assignments</h4>
+                <p>3</p>
+            </div>
+
+            <div class="overview-card">
+                <i class="fa-solid fa-chart-line"></i>
+                <h4>Overall Progress</h4>
+                <p>68%</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="settings-section">
+        <div class="section-header">
+            <h3>Account Settings</h3>
+        </div>
+
+        <div class="settings-buttons">
+            <button><i class="fa-solid fa-key"></i> Change Password</button>
+            <button><i class="fa-solid fa-image"></i> Upload Profile Picture</button>
+            <button><i class="fa-solid fa-bell"></i> Notification Settings</button>
+        </div>
+    </section>
+
+</main>
+
+</body>
+</html>

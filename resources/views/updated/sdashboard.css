@@ -6,12 +6,14 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(135deg, 
-        #0c1a3a 0%, 
-        #1e3a8a 25%, 
-        #1e40af 50%, 
-        #1d4ed8 75%, 
-        #3730a3 100%);
+    background: linear-gradient(
+        135deg,
+        #0c1a3a 0%,
+        #1e3a8a 25%,
+        #1e40af 50%,
+        #1d4ed8 75%,
+        #3730a3 100%
+    );
     min-height: 100vh;
     color: #111827;
 }
@@ -104,7 +106,7 @@ body {
 }
 
 .logout-btn:hover {
-    background: linear-gradient(135deg, #FF0000, #FF0000);
+    background: #dc2626;
     transform: translateY(-2px);
 }
 
@@ -151,6 +153,11 @@ body {
     border-radius: 12px;
     font-weight: 700;
     cursor: pointer;
+    transition: 0.25s;
+}
+
+.hero button:hover {
+    transform: translateY(-2px);
 }
 
 /* SECTION HEADER */
@@ -174,23 +181,41 @@ body {
     background: white;
     border-radius: 18px;
     padding: 22px;
-    border-left: 5px solid #1d4ed8;
     box-shadow: 0 10px 25px rgba(12, 26, 58, 0.12);
     transition: 0.25s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    border-left: 5px solid #1d4ed8;
 }
 
 .subject-card:hover {
     transform: translateY(-4px);
 }
 
+.subject-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 14px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
 .subject-card h4 {
     color: #1e3a8a;
     margin-bottom: 8px;
+    font-size: 1rem;
 }
 
 .subject-card p {
     color: #6b7280;
     margin-bottom: 12px;
+    font-size: 0.9rem;
 }
 
 .subject-card a {
@@ -200,6 +225,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    font-size: 0.9rem;
 }
 
 .subject-card a:hover {
@@ -256,18 +282,34 @@ body {
         gap: 14px;
     }
 
+    .brand h2 {
+        font-size: 1rem;
+    }
+
+    .brand img {
+        width: 28px;
+        height: 28px;
+    }
+
     .nav-links {
         order: 3;
         width: 100%;
-        justify-content: space-between;
-        gap: 10px;
+        display: flex;
         overflow-x: auto;
+        gap: 18px;
+        padding-bottom: 6px;
+        scrollbar-width: none;
+    }
+
+    .nav-links::-webkit-scrollbar {
+        display: none;
     }
 
     .nav-links a {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         padding: 8px 0;
         white-space: nowrap;
+        flex-shrink: 0;
     }
 
     .nav-links .active::after {
@@ -275,21 +317,22 @@ body {
     }
 
     .logout-btn {
-        padding: 9px 12px;
-        font-size: 0.78rem;
+        padding: 8px 11px;
+        font-size: 0.75rem;
     }
 
     .main-content {
-        padding: 26px 18px;
+        padding: 22px 16px;
     }
 
     .hero {
-        padding: 34px 22px;
+        padding: 28px 20px;
+        border-radius: 20px;
         text-align: left;
     }
 
     .hero h1 {
-        font-size: 1.8rem;
+        font-size: 1.65rem;
     }
 
     .hero p {
@@ -299,5 +342,16 @@ body {
 
     .subjects-grid {
         grid-template-columns: 1fr;
+    }
+
+    .subject-card {
+        padding: 18px;
+    }
+
+    .ai-chatbot {
+        width: 52px;
+        height: 52px;
+        right: 18px;
+        bottom: 18px;
     }
 }

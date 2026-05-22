@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GLMS Dashboard</title>
+<title>GLMS Student Dashboard</title>
 
 <link rel="stylesheet" href="sdashboard.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,14 +14,14 @@
 
 <header class="top-navbar">
     <div class="brand">
-        <a href="homepage.html">
+        <a href="sdashboard.html">
             <img src="LOGO.png" alt="School Logo">
         </a>
         <h2>GLMS</h2>
     </div>
 
     <nav class="nav-links">
-        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="sdashboard.html" class="active">Dashboard</a>
         <a href="courses.html">My Courses</a>
         <a href="assignments.html">Assignments</a>
         <a href="profile.html">Profile</a>
@@ -40,10 +40,12 @@
 <main class="main-content">
 
     <section class="hero">
-        <span class="badge">Student Learning Portal</span>
-        <h1>Welcome back, Student</h1>
-        <p>Access your enrolled subjects, view lessons, and continue your learning progress.</p>
-        <button>Continue Learning</button>
+        <div>
+            <span class="badge">Student Learning Portal</span>
+            <h1>Welcome back, Student</h1>
+            <p>Access your enrolled subjects, view lessons, and continue your learning progress.</p>
+            <button>Continue Learning</button>
+        </div>
     </section>
 
     <section class="subjects-section">
@@ -54,30 +56,51 @@
         <div class="subjects-grid">
 
             <div class="subject-card">
-                <h4>Web Development</h4>
-                <p>Instructor: Philip Magsaysay</p>
-                <a href="viewlessons.html">
-                    View Lessons
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
+                <div class="subject-icon">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+
+                <div>
+                    <h4>Web Development</h4>
+                    <p>Instructor: Philip Magsaysay</p>
+
+                    <a href="viewlessons.html">
+                        View Lessons
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
             </div>
 
             <div class="subject-card">
-                <h4>Programming Fundamentals</h4>
-                <p>Instructor: John Smith</p>
-                <a href="#">
-                    View Lessons
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
+                <div class="subject-icon">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+
+                <div>
+                    <h4>Programming Fundamentals</h4>
+                    <p>Instructor: John Smith</p>
+
+                    <a href="viewlessons.html">
+                        View Lessons
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
             </div>
 
             <div class="subject-card">
-                <h4>Database Management</h4>
-                <p>Instructor: Maria Santos</p>
-                <a href="#">
-                    View Lessons
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
+                <div class="subject-icon">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+
+                <div>
+                    <h4>Database Management</h4>
+                    <p>Instructor: Maria Santos</p>
+
+                    <a href="viewlessons.html">
+                        View Lessons
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
             </div>
 
         </div>

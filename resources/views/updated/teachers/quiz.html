@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLMS Create Quiz</title>
+
+<link rel="stylesheet" href="quiz.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<header class="top-navbar">
+    <div class="brand">
+        <a href="https://www.facebook.com/SJBKalentongBranchOfficial/photos">
+            <img src="LOGO.png" alt="School Logo">
+        </a>
+        <h2>GLMS</h2>
+    </div>
+
+    <nav class="nav-links">
+        <a href="teachers.html">Dashboard</a>
+        <a href="lessonsm.html">Lessons</a>
+        <a href="Assessment.html" class="active">Assessments</a>
+        <a href="studentlist.html">Students</a>
+        <a href="grades.html">Grades</a>
+        <a href="announcements.html">Announcements</a>
+    </nav>
+
+    <a href="login.html" class="logout-btn">
+        Logout <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </a>
+</header>
+
+<div class="ai-chatbot">
+    <i class="fa-solid fa-robot"></i>
+</div>
+
+<main class="main-content">
+
+    <section class="page-hero">
+        <span class="badge">Teacher Tools</span>
+        <h1>Create Quiz</h1>
+        <p>Create quizzes, questions, answer choices, and correct answers.</p>
+    </section>
+
+    <section class="form-card">
+        <div class="section-header">
+            <h3>Quiz Details</h3>
+        </div>
+
+        <form>
+            <div class="form-group">
+                <label>Quiz Title</label>
+                <input type="text" placeholder="Example: HTML Basics Quiz">
+            </div>
+
+            <div class="form-group">
+                <label>Course</label>
+                <select>
+                    <option>Web Development</option>
+                    <option>Programming Fundamentals</option>
+                    <option>Database Management</option>
+                    <option>Computer Networking</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Quiz Date</label>
+                    <input type="date">
+                </div>
+
+                <div class="form-group">
+                    <label>Time Limit</label>
+                    <input type="text" placeholder="30 minutes">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Question</label>
+                <textarea placeholder="Type your quiz question..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Answer Choices</label>
+                <input type="text" placeholder="Choice A">
+                <input type="text" placeholder="Choice B">
+                <input type="text" placeholder="Choice C">
+                <input type="text" placeholder="Choice D">
+            </div>
+
+            <div class="form-group">
+                <label>Correct Answer</label>
+                <select>
+                    <option>Choice A</option>
+                    <option>Choice B</option>
+                    <option>Choice C</option>
+                    <option>Choice D</option>
+                </select>
+            </div>
+
+            <button type="submit" class="primary-btn">
+                <i class="fa-solid fa-plus"></i> Create Quiz
+            </button>
+        </form>
+    </section>
+
+    <section class="list-card">
+        <div class="section-header">
+            <h3>Existing Quizzes</h3>
+        </div>
+
+        <div class="assessment-item">
+            <div>
+                <h4>HTML Basics Quiz</h4>
+                <p>Web Development • 10 Items • 30 Minutes</p>
+            </div>
+
+            <div class="actions">
+                <button class="edit-btn">Edit</button>
+                <button class="delete-btn">Delete</button>
+            </div>
+        </div>
+
+        <div class="assessment-item">
+            <div>
+                <h4>Database SQL Quiz</h4>
+                <p>Database Management • 6 Items • 20 Minutes</p>
+            </div>
+
+            <div class="actions">
+                <button class="edit-btn">Edit</button>
+                <button class="delete-btn">Delete</button>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+</body>
+</html>

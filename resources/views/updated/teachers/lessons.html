@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLMS Lessons Management</title>
+
+<link rel="stylesheet" href="lessons.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<header class="top-navbar">
+    <div class="brand">
+        <a href="teachers.html">
+            <img src="LOGO.png" alt="School Logo">
+        </a>
+        <h2>GLMS</h2>
+    </div>
+
+    <nav class="nav-links">
+        <a href="teachers.html">Dashboard</a>
+        <a href="lessonsm.html" class="active">Lessons</a>
+        <a href="assessments.html">Assessments</a>
+        <a href="studentlist.html">Students</a>
+        <a href="grades.html">Grades</a>
+        <a href="announcements.html">Announcements</a>
+    </nav>
+
+    <a href="login.html" class="logout-btn">
+        Logout
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </a>
+</header>
+
+<!-- AI CHATBOT -->
+<div class="ai-chatbot">
+    <i class="fa-solid fa-robot"></i>
+</div>
+
+<main class="main-content">
+
+    <section class="lessons-hero">
+        <span class="badge">Teacher Tools</span>
+        <h1>Lessons Management</h1>
+        <p>Create, view, edit, and manage lesson materials for your students.</p>
+
+        <a href="createlesson.html" class="create-btn">
+            <i class="fa-solid fa-plus"></i>
+            Create New Lesson
+        </a>
+    </section>
+
+    <section class="existing-lessons-card">
+        <div class="section-header">
+            <h3>Existing Lessons</h3>
+        </div>
+
+        <div class="lesson-list">
+
+            <div class="lesson-item">
+                <div class="lesson-info">
+                    <div class="lesson-icon">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+
+                    <div>
+                        <h4>Introduction to Web Development</h4>
+                        <p>Web Development • PDF Material • Visible</p>
+                    </div>
+                </div>
+
+                <div class="lesson-actions">
+                    <button class="edit-btn">
+                        <i class="fa-solid fa-pen"></i>
+                        Edit
+                    </button>
+
+                    <button class="delete-btn">
+                        <i class="fa-solid fa-trash"></i>
+                        Delete
+                    </button>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="lesson-info">
+                    <div class="lesson-icon">
+                        <i class="fa-solid fa-file-code"></i>
+                    </div>
+
+                    <div>
+                        <h4>Programming Basics</h4>
+                        <p>Programming Fundamentals • Module • Visible</p>
+                    </div>
+                </div>
+
+                <div class="lesson-actions">
+                    <button class="edit-btn">
+                        <i class="fa-solid fa-pen"></i>
+                        Edit
+                    </button>
+
+                    <button class="delete-btn">
+                        <i class="fa-solid fa-trash"></i>
+                        Delete
+                    </button>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="lesson-info">
+                    <div class="lesson-icon">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+
+                    <div>
+                        <h4>SQL Fundamentals</h4>
+                        <p>Database Management • PDF Material • Draft</p>
+                    </div>
+                </div>
+
+                <div class="lesson-actions">
+                    <button class="edit-btn">
+                        <i class="fa-solid fa-pen"></i>
+                        Edit
+                    </button>
+
+                    <button class="delete-btn">
+                        <i class="fa-solid fa-trash"></i>
+                        Delete
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+</body>
+</html>

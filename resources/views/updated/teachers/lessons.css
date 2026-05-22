@@ -1,0 +1,398 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(
+        135deg,
+        #0c1a3a 0%,
+        #1e3a8a 25%,
+        #1e40af 50%,
+        #1d4ed8 75%,
+        #3730a3 100%
+    );
+    min-height: 100vh;
+    color: #111827;
+}
+
+/* TOP NAVBAR */
+.top-navbar {
+    height: 66px;
+    background: #ffffff;
+    border-bottom: 3px solid #1d4ed8;
+    padding: 0 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 20px rgba(12, 26, 58, 0.12);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* BRAND */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand a {
+    display: flex;
+    align-items: center;
+}
+
+.brand img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.brand h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e3a8a;
+}
+
+/* NAV LINKS */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.nav-links a {
+    color: #374151;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 24px 0;
+    position: relative;
+    transition: 0.25s;
+    white-space: nowrap;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+    color: #1d4ed8;
+}
+
+.nav-links .active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 3px;
+    background: #1d4ed8;
+    border-radius: 10px 10px 0 0;
+}
+
+/* LOGOUT */
+.logout-btn {
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 9px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    transition: 0.25s;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+/* MAIN CONTENT */
+.main-content {
+    padding: 44px 6%;
+}
+
+/* HERO */
+.lessons-hero {
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    color: white;
+    padding: 45px;
+    border-radius: 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 18px 45px rgba(30, 64, 175, 0.28);
+}
+
+.badge {
+    background: rgba(255,255,255,0.18);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+}
+
+.lessons-hero h1 {
+    font-size: 2.3rem;
+    margin: 18px 0 8px;
+}
+
+.lessons-hero p {
+    color: #dbeafe;
+    margin-bottom: 20px;
+    max-width: 650px;
+    font-size: 0.95rem;
+}
+
+/* CREATE BUTTON */
+.create-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    background: #ffffff;
+    color: #1d4ed8;
+    padding: 11px 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: 0.25s;
+}
+
+.create-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* CARD */
+.existing-lessons-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 10px 25px rgba(12, 26, 58, 0.12);
+}
+
+.section-header h3 {
+    color: #1e3a8a;
+    font-size: 1.35rem;
+    margin-bottom: 18px;
+}
+
+/* LESSON LIST */
+.lesson-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.lesson-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.25s ease;
+}
+
+.lesson-item:hover {
+    border-color: #1d4ed8;
+    box-shadow: 0 8px 18px rgba(12, 26, 58, 0.08);
+}
+
+.lesson-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.lesson-icon {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    border-radius: 14px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.lesson-info h4 {
+    color: #1e3a8a;
+    font-size: 0.98rem;
+    margin-bottom: 4px;
+}
+
+.lesson-info p {
+    color: #6b7280;
+    font-size: 0.84rem;
+}
+
+/* ACTION BUTTONS */
+.lesson-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.lesson-actions button {
+    border: none;
+    border-radius: 10px;
+    padding: 9px 12px;
+    color: white;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.edit-btn {
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* AI CHATBOT */
+.ai-chatbot {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    box-shadow: 0 8px 18px rgba(30, 64, 175, 0.30);
+    cursor: pointer;
+    transition: 0.25s ease;
+    z-index: 9999;
+}
+
+.ai-chatbot i {
+    line-height: 1;
+}
+
+.ai-chatbot:hover {
+    transform: translateY(-3px) scale(1.04);
+    background: linear-gradient(135deg, #1e3a8a, #1e40af);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+
+    .top-navbar {
+        padding: 0 5%;
+    }
+
+    .main-content {
+        padding: 36px 5%;
+    }
+
+    .nav-links {
+        gap: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .top-navbar {
+        height: auto;
+        padding: 14px 18px;
+        flex-wrap: wrap;
+        gap: 14px;
+    }
+
+    .brand h2 {
+        font-size: 1rem;
+    }
+
+    .brand img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        display: flex;
+        overflow-x: auto;
+        gap: 18px;
+        padding-bottom: 6px;
+        scrollbar-width: none;
+    }
+
+    .nav-links::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-links a {
+        font-size: 0.78rem;
+        padding: 8px 0;
+        flex-shrink: 0;
+    }
+
+    .nav-links .active::after {
+        bottom: -4px;
+    }
+
+    .logout-btn {
+        padding: 8px 11px;
+        font-size: 0.75rem;
+    }
+
+    .main-content {
+        padding: 22px 16px;
+    }
+
+    .lessons-hero {
+        padding: 28px 20px;
+        border-radius: 20px;
+    }
+
+    .lessons-hero h1 {
+        font-size: 1.65rem;
+    }
+
+    .existing-lessons-card {
+        padding: 18px;
+    }
+
+    .lesson-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .lesson-actions {
+        width: 100%;
+    }
+
+    .lesson-actions button {
+        flex: 1;
+        justify-content: center;
+    }
+
+    /* SMALLER MOBILE AI CHATBOT */
+    .ai-chatbot {
+        width: 40px;
+        height: 40px;
+        right: 14px;
+        bottom: 14px;
+        font-size: 0.9rem;
+    }
+}

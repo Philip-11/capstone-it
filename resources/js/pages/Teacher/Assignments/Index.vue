@@ -12,30 +12,113 @@ const deleteAssignment = (id) => {
 </script>
 
 <template>
-    <div class="p-6 bg-white rounded shadow max-w-5xl mx-auto mt-10">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold">My Assignments</h1>
-            <Link :href="route('teacher.assignments.create')" class="bg-blue-600 text-white px-4 py-2 rounded">Create New Assignment</Link>
-        </div>
+    <div class="min-h-screen bg-gradient-to-br from-[#0c1a3a] via-[#1e3a8a] via-[#1e40af] to-[#3730a3] text-gray-900 font-sans pb-16">
+        
+        <header class="h-[66px] bg-white border-b-3 border-blue-600 px-[5%] md:px-[9%] flex items-center justify-between shadow-lg sticky top-0 z-50">
+            <div class="flex items-center gap-2.5">
+                <img src="/LOGO.png" alt="School Logo" class="w-[30px] h-[30px] object-contain" />
+                <h2 class="text-xl font-bold text-blue-900 tracking-tight">GLMS <span class="text-xs font-semibold bg-purple-100 text-purple-700 px-2 py-0.5 rounded ml-1">Faculty</span></h2>
+            </div>
 
-        <table class="w-full border-collapse">
-            <thead>
-                <tr class="bg-gray-100 border-b">
-                    <th class="p-3 text-left">Title</th>
-                    <th class="p-3 text-left">Questions</th>
-                    <th class="p-3 text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="assignment in assignments" :key="assignment.id" class="border-b hover:bg-gray-50">
-                    <td class="p-3">{{ assignment.title }}</td>
-                    <td class="p-3">{{ assignment.questions_count }} items</td>
-                    <td class="p-3 text-center space-x-2">
-                        <Link :href="route('teacher.assignments.edit', assignment.id)" class="text-blue-600">Edit</Link>
-                        <button @click="deleteAssignment(assignment.id)" class="text-red-600">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <nav class="hidden md:flex items-center gap-[34px]">
+                <Link :href="route('teacher.lessons.name')" class="text-gray-600 hover:text-blue-600 text-sm font-semibold transition">Lessons & Hub</Link>
+                <a href="#" class="text-gray-600 hover:text-blue-600 text-sm font-semibold transition">Classes</a>
+                <a href="#" class="text-purple-600 font-bold text-sm py-6 relative after:content-[''] after:absolute after:left-0 after:bottom-[-3px] after:w-full after:h-[3px] after:bg-purple-600 after:rounded-t">Assignments Hub</a>
+            </nav>
+
+            <Link method="post" href="/logout" as="button" class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-2.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition hover:from-red-600 hover:to-red-700 shadow-md">
+                Logout Dashboard
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </Link>
+        </header>
+
+        <main class="max-w-5xl mx-auto px-4 md:px-0 pt-10 space-y-6">
+
+            <section class="bg-white rounded-[24px] p-6 md:p-8 shadow-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="space-y-1">
+                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold tracking-wide">
+                        <i class="fa-solid fa-briefcase text-xs mr-1"></i> Assignment Manager
+                    </span>
+                    <h1 class="text-2xl md:text-3xl font-bold text-blue-950 mt-1">Coursework Activities</h1>
+                    <p class="text-sm text-gray-500">Review, modify, or append technical task instructions deployed to candidate profiles.</p>
+                </div>
+                
+                <Link 
+                    :href="route('teacher.assignments.create')" 
+                    class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-700 to-purple-600 hover:from-purple-800 hover:to-purple-700 text-white px-5 py-3 rounded-xl text-xs font-bold shadow-lg transition duration-150 hover:-translate-y-0.5 whitespace-nowrap w-full sm:w-auto justify-center"
+                >
+                    <i class="fa-solid fa-plus"></i> Create New Assignment
+                </Link>
+            </section>
+
+            <section class="bg-white rounded-[24px] shadow-xl border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse text-sm">
+                        
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-100 text-gray-600 font-bold">
+                                <th class="p-4 md:p-5 text-left uppercase tracking-wider text-xs">Activity Task Title</th>
+                                <th class="p-4 md:p-5 text-left uppercase tracking-wider text-xs">Total Items / Prompts</th>
+                                <th class="p-4 md:p-5 text-center uppercase tracking-wider text-xs">System Administration Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="divide-y divide-gray-100 bg-white">
+                            <tr 
+                                v-for="assignment in assignments" 
+                                :key="assignment.id" 
+                                class="hover:bg-blue-50/30 transition duration-150"
+                            >
+                                <td class="p-4 md:p-5 font-bold text-blue-950">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold text-sm">
+                                            <i class="fa-solid fa-scroll text-xs"></i>
+                                        </div>
+                                        <span class="hover:text-purple-700 cursor-pointer transition">{{ assignment.title }}</span>
+                                    </div>
+                                </td>
+
+                                <td class="p-4 md:p-5 font-medium text-gray-600">
+                                    <span class="bg-gray-100 text-gray-700 font-bold px-2.5 py-1 rounded-lg text-xs border border-gray-200">
+                                        {{ assignment.questions_count || 0 }} {{ (assignment.questions_count || 0) > 1 ? 'items' : 'item' }}
+                                    </span>
+                                </td>
+
+                                <td class="p-4 md:p-5 text-center">
+                                    <div class="flex items-center justify-center gap-1.5">
+                                        <Link 
+                                            :href="route('teacher.assignments.edit', assignment.id)" 
+                                            class="inline-flex items-center gap-1 px-3 py-2 bg-gray-50 text-amber-600 border border-gray-100 hover:border-amber-200 hover:bg-amber-50 rounded-xl text-xs font-bold transition"
+                                            title="Modify Assignment Details"
+                                        >
+                                            <i class="fa-solid fa-pen text-[11px]"></i> Edit
+                                        </Link>
+                                        
+                                        <button 
+                                            @click="deleteAssignment(assignment.id)" 
+                                            class="inline-flex items-center gap-1 px-3 py-2 bg-gray-50 text-red-600 border border-gray-100 hover:border-red-200 hover:bg-red-50 rounded-xl text-xs font-bold transition"
+                                            title="Purge Assignment Record"
+                                        >
+                                            <i class="fa-solid fa-trash-can text-[11px]"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr v-if="assignments.length === 0">
+                                <td colspan="3" class="p-12 text-center text-gray-400 italic font-medium">
+                                    <div class="space-y-2">
+                                        <i class="fa-solid fa-inbox text-3xl text-gray-300"></i>
+                                        <p class="text-sm">No assignment records deployed in this faculty folder repository.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </section>
+            
+        </main>
     </div>
 </template>

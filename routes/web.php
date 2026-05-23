@@ -21,8 +21,9 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->gr
     Route::post('/teacher/subjects', [TeacherController::class, 'storeSubject'])->name('teacher.subjects.store');
 
     //Teacher dashboard
-    Route::get('/teacher/lessons', [TeacherController::class, 'index'])->name('teacher.lessons.name');
+    Route::get('/teacher/dashboard', [TeacherController::class, 'index'])->name('teacher.lessons.name');
 
+    Route::get('/teacher/lessons', [TeacherController::class, 'indexLesson'])->name('teacher.lessons.index');
     Route::post('/teacher/lessons', [TeacherController::class, 'storeLesson'])->name('teacher.lessons.store');
 
     Route::post('/teacher/lessons/{lesson}/quiz', [TeacherController::class, 'storeQuiz'])->name('teacher.quiz.store');

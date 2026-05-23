@@ -25,7 +25,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             if (Auth::user()->role === 'teacher'){
-                return redirect()->intended('/teacher/lessons');
+                return redirect()->intended('/teacher/dashboard');
             }
 
             return redirect()->intended('/student/dashboard');

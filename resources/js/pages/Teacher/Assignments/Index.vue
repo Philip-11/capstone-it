@@ -1,5 +1,8 @@
 <script setup>
 import { Link, useForm } from '@inertiajs/vue3';
+import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
+
+defineOptions({ layout: AuthenticatedLayout });
 
 const props = defineProps({ assignments: Array });
 const form = useForm({});
@@ -13,24 +16,6 @@ const deleteAssignment = (id) => {
 
 <template>
     <div class="min-h-screen bg-gradient-to-br from-[#0c1a3a] via-[#1e3a8a] via-[#1e40af] to-[#3730a3] text-gray-900 font-sans pb-16">
-        
-        <header class="h-[66px] bg-white border-b-3 border-blue-600 px-[5%] md:px-[9%] flex items-center justify-between shadow-lg sticky top-0 z-50">
-            <div class="flex items-center gap-2.5">
-                <img src="/LOGO.png" alt="School Logo" class="w-[30px] h-[30px] object-contain" />
-                <h2 class="text-xl font-bold text-blue-900 tracking-tight">GLMS <span class="text-xs font-semibold bg-purple-100 text-purple-700 px-2 py-0.5 rounded ml-1">Faculty</span></h2>
-            </div>
-
-            <nav class="hidden md:flex items-center gap-[34px]">
-                <Link :href="route('teacher.lessons.name')" class="text-gray-600 hover:text-blue-600 text-sm font-semibold transition">Lessons & Hub</Link>
-                <a href="#" class="text-gray-600 hover:text-blue-600 text-sm font-semibold transition">Classes</a>
-                <a href="#" class="text-purple-600 font-bold text-sm py-6 relative after:content-[''] after:absolute after:left-0 after:bottom-[-3px] after:w-full after:h-[3px] after:bg-purple-600 after:rounded-t">Assignments Hub</a>
-            </nav>
-
-            <Link method="post" href="/logout" as="button" class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-2.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition hover:from-red-600 hover:to-red-700 shadow-md">
-                Logout Dashboard
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-            </Link>
-        </header>
 
         <main class="max-w-5xl mx-auto px-4 md:px-0 pt-10 space-y-6">
 
@@ -40,14 +25,14 @@ const deleteAssignment = (id) => {
                         <i class="fa-solid fa-briefcase text-xs mr-1"></i> Assignment Manager
                     </span>
                     <h1 class="text-2xl md:text-3xl font-bold text-blue-950 mt-1">Coursework Activities</h1>
-                    <p class="text-sm text-gray-500">Review, modify, or append technical task instructions deployed to candidate profiles.</p>
+                    <p class="text-sm text-gray-500">Review, modify, or append technical task instructions for students.</p>
                 </div>
                 
                 <Link 
                     :href="route('teacher.assignments.create')" 
                     class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-700 to-purple-600 hover:from-purple-800 hover:to-purple-700 text-white px-5 py-3 rounded-xl text-xs font-bold shadow-lg transition duration-150 hover:-translate-y-0.5 whitespace-nowrap w-full sm:w-auto justify-center"
                 >
-                    <i class="fa-solid fa-plus"></i> Create New Assignment
+                    <i class="fa-solid fa-plus"></i> Create New Coursework
                 </Link>
             </section>
 
@@ -59,7 +44,7 @@ const deleteAssignment = (id) => {
                             <tr class="bg-gray-50 border-b border-gray-100 text-gray-600 font-bold">
                                 <th class="p-4 md:p-5 text-left uppercase tracking-wider text-xs">Activity Task Title</th>
                                 <th class="p-4 md:p-5 text-left uppercase tracking-wider text-xs">Total Items / Prompts</th>
-                                <th class="p-4 md:p-5 text-center uppercase tracking-wider text-xs">System Administration Actions</th>
+                                <th class="p-4 md:p-5 text-center uppercase tracking-wider text-xs">Actions</th>
                             </tr>
                         </thead>
 

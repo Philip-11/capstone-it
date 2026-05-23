@@ -36,6 +36,29 @@ class TeacherController extends Controller
         ]);
     }
 
+    public function indexLesson()
+    {
+        // 1. Kuhanin ang kasalukuyang naka-log in na teacher session
+        $user = Auth::user();
+
+        // 2. Kuhanin lahat ng lessons na pagmamay-ari ng teacher na 'to (kasama ang linked quiz metadata structural state)
+        $lessons = $user->lessons()
+            ->with('quiz') // Eager load para sa 'Linked Quiz' indicator badge mo sa UI catalog list
+            ->latest()
+            ->get();
+
+        // 3. Kuhanin ang active courses/subjects list ng teacher para mag-hydrate ang selection dropdown list menu
+        $subjects = Subject::where('user_id', $user->id)
+            ->latest()
+            ->get();
+
+        // 4. I-render ang standalone single-page workspace via Inertia
+        return Inertia::render('Teacher/Lessons/Index', [
+            'lessons'  => $lessons,
+            'subjects' => $subjects,
+        ]);
+    }
+
     public function storeLesson(Request $request)
     {
         // 1. Validation - Use $validated to ensure you only use safe data
@@ -77,47 +100,62 @@ class TeacherController extends Controller
 
     public function updateLesson(Request $request, $id)
     {
+        // 1. Hanapin ang umiiral na lesson record o mag-throw ng 404
         $lesson = Lesson::findOrFail($id);
 
+        // 2. Validation - Sabayan natin kung ano ang rules ng storeLesson (kasama ang subject_id)
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'document' => 'nullable|file|mimes:pdf,ppt,pptx|max:20480', 
+            'subject_id' => 'required|exists:subjects,id', // Idinagdag para synchronized sa store control
+            'document' => 'nullable|file|mimes:pdf,ppt,pptx|max:20480', // hanggang 20MB
         ]);
 
+        // 3. I-update ang basic meta attributes gamit ang safe validated data
         $lesson->title = $validated['title'];
-        $lesson->content = $validated['content'];
         $lesson->slug = Str::slug($validated['title']);
+        $lesson->content = $validated['content'];
+        $lesson->subject_id = $validated['subject_id']; // Naka-sync na rin sa target subject selection
 
+        // 4. Handle storage swapping kung may bagong file na binato si teacher
         if ($request->hasFile('document')) {
-            // Optional: Delete old file so you don't waste space
-            if ($lesson->file_path) {
+            $file = $request->file('document');
+
+            // Proteksyon: I-delete ang lumang file sa public storage para walang ghost files na kumakain ng space
+            if ($lesson->file_path && Storage::disk('public')->exists($lesson->file_path)) {
                 Storage::disk('public')->delete($lesson->file_path);
             }
 
-            $path = $request->file('document')->store('lessons', 'public');
+            // I-store ang bagong asset file
+            $path = $file->store('lessons', 'public');
+            
             $lesson->file_path = $path;
-            $lesson->file_name = $request->file('document')->getClientOriginalName();
+            $lesson->file_name = $file->getClientOriginalName();
         }
 
+        // 5. I-save ang bawat binagong attributes sa database row
         $lesson->save();
 
-        return redirect()->back()->with('message', 'Lesson updated!');
+        return redirect()->back()->with('message', 'Lesson updated successfully!');
     }
 
-    public function destroyLesson(Lesson $lesson){
-        //Make sure the right teacher is deleting their own lesson
-        if ($lesson->user_id !== Auth::id()){
-            abort(403, 'Unauthorized Action');
+    public function destroyLesson(Lesson $lesson)
+    {
+        // 1. Security Gatekeeper: Siguraduhing ang mismong teacher lang na gumawa ang pwedeng mag-delete
+        if ($lesson->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized Action. You do not own this lesson record.');
         }
 
-        if ($lesson->file_path){
+        // 2. Storage Cleanup: I-verify kung talagang may file at buhay pa sa server bago i-execute ang delete command
+        if ($lesson->file_path && Storage::disk('public')->exists($lesson->file_path)) {
             Storage::disk('public')->delete($lesson->file_path);
         }
 
+        // 3. Database Purge: Burahin na ang record sa lessons table
         $lesson->delete();
 
-        return redirect()->back()->with('message', 'Lesson deleted successfully');
+        // 4. Redirect Back to Dashboard Interface
+        return redirect()->back()->with('message', 'Lesson and its associated files have been deleted successfully.');
     }
 
     public function downloadLesson(Lesson $lesson){

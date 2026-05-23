@@ -59,9 +59,9 @@ const getSubjectIcon = (subjectName) => {
                 <span class="bg-white/20 px-3 py-1 rounded-full text-xs tracking-wide">Student Learning Portal</span>
                 <h1 class="text-3xl md:text-4xl font-bold my-[18px]">Welcome back, Student</h1>
                 <p class="max-w-[600px] text-blue-100 text-sm md:text-base mb-5">Access your enrolled subjects, view lessons, and continue your learning progress.</p>
-                <button class="bg-white text-blue-600 px-[18px] py-3 rounded-xl font-bold hover:-translate-y-0.5 transition duration-200 shadow-md active:scale-95">
+                <!-- <button class="bg-white text-blue-600 px-[18px] py-3 rounded-xl font-bold hover:-translate-y-0.5 transition duration-200 shadow-md active:scale-95">
                     Continue Learning
-                </button>
+                </button> -->
             </section>
 
             <section class="grid grid-cols-2 md:grid-cols-4 gap-[18px]">

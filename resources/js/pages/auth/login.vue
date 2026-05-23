@@ -15,56 +15,91 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Log in" />
+    <Head title="Login" />
 
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-            <h2 class="text-2xl font-bold mb-6 text-center">Teacher Login</h2>
+    <div class="min-h-screen bg-gradient-to-br from-[#0c1a3a] via-[#1e3a8a] to-[#3730a3] font-sans flex flex-col justify-center items-center px-4">
+        
+        <div class="mb-6 flex flex-col items-center gap-3 text-center">
+            <div class="w-14 h-14 rounded-2xl bg-white p-2.5 shadow-xl flex items-center justify-center">
+                <img src="/LOGO.png" alt="School Logo" class="w-full h-full object-contain" />
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-white tracking-tight">GLMS</h1>
+                <!-- <p class="text-xs text-blue-200/80 font-medium">Teacher Portal</p> -->
+            </div>
+        </div>
 
-            <form @submit.prevent="submit">
-                <!-- Email -->
-                <div>
-                    <label class="block font-medium text-sm text-gray-700">Email</label>
-                    <input 
-                        v-model="form.email" 
-                        type="email" 
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
-                        required 
-                        autofocus 
-                    />
-                    <div v-if="form.errors.email" class="text-red-600 text-sm mt-2">{{ form.errors.email }}</div>
+        <div class="w-full sm:max-w-[420px] bg-white rounded-2xl shadow-xl p-8 space-y-5">
+            
+            <div class="text-center pb-2 border-b border-gray-100">
+                <h2 class="text-lg font-bold text-gray-900">Sign In</h2>
+                <p class="text-xs text-gray-400 mt-0.5">Enter your credentials to access your account.</p>
+            </div>
+
+            <form @submit.prevent="submit" class="space-y-4 text-xs">
+                
+                <div class="space-y-1">
+                    <label class="font-bold text-gray-600 block">Email Address</label>
+                    <div class="relative flex items-center">
+                        <span class="absolute left-4 text-gray-400 pointer-events-none">
+                            <i class="fa-solid fa-envelope"></i>
+                        </span>
+                        <input 
+                            v-model="form.email" 
+                            type="email" 
+                            placeholder="your.email@school.edu.ph"
+                            class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50/50 text-sm text-gray-900" 
+                            required 
+                            autofocus 
+                        />
+                    </div>
+                    <div v-if="form.errors.email" class="text-red-500 font-medium mt-1 text-[11px]">
+                        {{ form.errors.email }}
+                    </div>
                 </div>
 
-                <!-- Password -->
-                <div class="mt-4">
-                    <label class="block font-medium text-sm text-gray-700">Password</label>
-                    <input 
-                        v-model="form.password" 
-                        type="password" 
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
-                        required 
-                    />
-                    <div v-if="form.errors.password" class="text-red-600 text-sm mt-2">{{ form.errors.password }}</div>
+                <div class="space-y-1">
+                    <div class="flex justify-between items-center">
+                        <label class="font-bold text-gray-600">Password</label>
+                        <a href="#" class="font-bold text-blue-600 hover:underline">Forgot password?</a>
+                    </div>
+                    <div class="relative flex items-center">
+                        <span class="absolute left-4 text-gray-400 pointer-events-none">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input 
+                            v-model="form.password" 
+                            type="password" 
+                            placeholder="••••••••"
+                            class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50/50 text-sm text-gray-900" 
+                            required 
+                        />
+                    </div>
+                    <div v-if="form.errors.password" class="text-red-500 font-medium mt-1 text-[11px]">
+                        {{ form.errors.password }}
+                    </div>
                 </div>
 
-                <!-- Remember Me -->
-                <div class="block mt-4">
-                    <label class="flex items-center">
-                        <input type="checkbox" v-model="form.remember" class="rounded border-gray-300 text-indigo-600 shadow-sm" />
-                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                <div class="flex items-center pt-0.5">
+                    <label class="flex items-center cursor-pointer select-none">
+                        <input type="checkbox" v-model="form.remember" class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                        <span class="ml-2 font-medium text-gray-500">Remember me</span>
                     </label>
                 </div>
 
-                <div class="flex items-center justify-end mt-4">
+                <div class="pt-1">
                     <button 
                         type="submit" 
-                        class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl shadow-md transition duration-150 active:translate-y-0 flex items-center justify-center gap-2 text-xs uppercase tracking-wider"
                         :disabled="form.processing"
                     >
-                        Log in
+                        <i class="fa-solid" :class="form.processing ? 'fa-spinner animate-spin' : 'fa-right-to-bracket'"></i>
+                        {{ form.processing ? 'Logging in...' : 'Login' }}
                     </button>
                 </div>
+
             </form>
         </div>
+
     </div>
 </template>

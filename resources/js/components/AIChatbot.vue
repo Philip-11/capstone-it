@@ -19,13 +19,26 @@ const chatInput = ref('');
 const isAiThinking = ref(false);
 const chatMessagesContainer = ref(null);
 const aiMessages = ref([]);
+const currentConversationId = ref(null);
 
 
-onMounted(() => {
-    aiMessages.value.push({
-        role: 'assistant',
-        content: props.greetingMessage
-    });
+onMounted(async () => {
+    try {
+        const response = await axios.get('/teacher/ai-chat/history');
+
+        currentConversationId.value = response.data.conversation_id;
+
+        if (response.data.messages.length > 0){
+            aiMessages.value = response.data.messages;
+        } else {
+            aiMessages.value.push({
+                role: 'assistant',
+                content: props.greetingMessage
+            });
+        }
+    } catch (error){
+        console.error('The history cannot be loaded', error);
+    }
 });
 
 const autoScrollChat = async () => {
@@ -47,8 +60,13 @@ const sendChatMessage = async () => {
     try {
         const response = await axios.post('/teacher/ai-chat', { 
             message: userText,
+            conversation_id: currentConversationId.value,
             role: props.userRole 
         });
+
+        if (!currentConversationId.value){
+            currentConversationId.value = response.data.conversation_id;
+        }
         aiMessages.value.push({ role: 'assistant', content: response.data.reply });
     } catch (error) {
         aiMessages.value.push({ role: 'assistant', content: "Sorry, I can't connect to the server right now." });

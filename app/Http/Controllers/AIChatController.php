@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class AIChatController extends Controller
@@ -15,8 +16,14 @@ class AIChatController extends Controller
 
         $userMessage = $request->input('message');
         $apiKey = env('GEMINI_API_KEY');
+        $user = Auth::user();
 
-        $systemInstruction = "You are a gamified learning management system AI copilot, a helpful assitant embedded in the gamified learning management system for teachers and students. Answer professionally, concisely, and supportively. You can use a taglish response if the user asks in taglish.";
+        if ($user && ($user->role === 'teacher' || str_contains(strtolower($user->email), 'teacher'))){
+            $systemInstruction = "You are a gamified learning management system AI copilot, a helpful assitant embedded in the gamified learning management system for teachers. Answer professionally, concisely, and supportively. You can use a taglish response if the user asks in taglish.";
+        } else {
+            $systemInstruction = "You are a gamified learning management system AI copilot, a helpful assitant embedded in the gamified learning management system for and students. Answer professionally, concisely, and supportively. You can use a taglish response if the user asks in taglish.";
+        }
+
 
         try {
             $response = Http::withHeaders([
@@ -26,7 +33,7 @@ class AIChatController extends Controller
                 'contents' => [
                     [
                         'parts' => [
-                            ['text' => $systemInstruction . "\n\nUser Question: " . $userMessage]
+                            ['text' => "System Context: " . $systemInstruction . "\n\nUser Name: " . ($user->name ?? 'User') . "\nQuestion: " . $userMessage]
                         ]
                     ]
                 ]

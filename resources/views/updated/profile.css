@@ -153,9 +153,12 @@ body {
     border-radius: 12px;
     font-weight: 700;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-/* PROFILE CARD */
+/* MAIN CARDS */
 .profile-card,
 .overview-section,
 .settings-section {
@@ -166,16 +169,24 @@ body {
     box-shadow: 0 10px 25px rgba(12, 26, 58, 0.12);
 }
 
+/* PROFILE CARD */
 .profile-card {
-    display: flex;
-    gap: 24px;
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 28px;
     align-items: center;
+}
+
+.profile-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
 }
 
 .profile-avatar {
     width: 110px;
     height: 110px;
-    min-width: 110px;
     border-radius: 50%;
     background: linear-gradient(135deg, #1e40af, #1d4ed8);
     display: flex;
@@ -188,6 +199,63 @@ body {
     color: white;
 }
 
+/* INLINE UPLOAD */
+.inline-upload-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.small-upload-box {
+    position: relative;
+    width: 100%;
+    border: 2px dashed #bfdbfe;
+    background: #eff6ff;
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.small-upload-box:hover {
+    background: #dbeafe;
+    border-color: #1d4ed8;
+}
+
+.small-upload-box i {
+    color: #1d4ed8;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.small-upload-box span {
+    display: block;
+    color: #1e3a8a;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.small-upload-box input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.small-save-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* PROFILE INFO */
 .profile-info {
     width: 100%;
 }
@@ -195,6 +263,7 @@ body {
 .profile-info h2 {
     color: #1e3a8a;
     margin-bottom: 5px;
+    font-size: 2rem;
 }
 
 .profile-info p {
@@ -202,6 +271,7 @@ body {
     margin-bottom: 18px;
 }
 
+/* INFO GRID */
 .info-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(180px, 1fr));
@@ -227,13 +297,14 @@ body {
     font-size: 0.92rem;
 }
 
-/* OVERVIEW */
+/* SECTION HEADER */
 .section-header h3 {
     color: #1e3a8a;
     font-size: 1.35rem;
     margin-bottom: 18px;
 }
 
+/* OVERVIEW */
 .overview-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -268,20 +339,18 @@ body {
 .settings-buttons {
     display: flex;
     gap: 12px;
-    flex-wrap: wrap;
 }
 
-.settings-buttons button {
-    border: none;
+.settings-link {
     border-radius: 12px;
     padding: 11px 15px;
     background: linear-gradient(135deg, #1e40af, #1d4ed8);
     color: white;
     font-weight: 700;
-    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
+    text-decoration: none;
 }
 
 /* AI CHATBOT */
@@ -304,17 +373,13 @@ body {
     z-index: 9999;
 }
 
-.ai-chatbot i {
-    line-height: 1;
-}
-
 .ai-chatbot:hover {
     transform: translateY(-3px) scale(1.04);
-    background: linear-gradient(135deg, #1e3a8a, #1e40af);
 }
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
+
     .top-navbar {
         padding: 0 5%;
     }
@@ -326,27 +391,15 @@ body {
     .overview-cards {
         grid-template-columns: repeat(2, 1fr);
     }
-
-    .nav-links {
-        gap: 22px;
-    }
 }
 
 @media (max-width: 768px) {
+
     .top-navbar {
         height: auto;
         padding: 14px 18px;
         flex-wrap: wrap;
         gap: 14px;
-    }
-
-    .brand h2 {
-        font-size: 1rem;
-    }
-
-    .brand img {
-        width: 28px;
-        height: 28px;
     }
 
     .nav-links {
@@ -370,10 +423,6 @@ body {
         flex-shrink: 0;
     }
 
-    .nav-links .active::after {
-        bottom: -4px;
-    }
-
     .logout-btn {
         padding: 8px 11px;
         font-size: 0.75rem;
@@ -393,14 +442,20 @@ body {
     }
 
     .profile-card {
-        flex-direction: column;
-        align-items: flex-start;
+        grid-template-columns: 1fr;
+    }
+
+    .profile-left {
+        width: 100%;
+    }
+
+    .inline-upload-form {
+        max-width: 220px;
     }
 
     .profile-avatar {
         width: 90px;
         height: 90px;
-        min-width: 90px;
     }
 
     .profile-avatar i {
@@ -410,14 +465,9 @@ body {
     .info-grid,
     .overview-cards {
         grid-template-columns: 1fr;
-        width: 100%;
     }
 
-    .settings-buttons {
-        flex-direction: column;
-    }
-
-    .settings-buttons button {
+    .settings-link {
         width: 100%;
         justify-content: center;
     }

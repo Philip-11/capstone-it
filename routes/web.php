@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AIChatController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\StudentController;
@@ -61,4 +62,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/student/assignments/{assignment}', [StudentAssignmentController::class, 'show'])->name('student.assignments.show');
     Route::post('/student/assignments/{assignment}/submit', [StudentAssignmentController::class, 'submit'])->name('student.assignments.submit');
+
+    //AI Route
+    Route::post('/teacher/ai-chat', [AIChatController::class, 'handleChat'])->name('teacher.ai-chat');
 });

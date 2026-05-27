@@ -72,6 +72,7 @@ body {
     padding: 24px 0;
     position: relative;
     transition: 0.25s;
+    white-space: nowrap;
 }
 
 .nav-links a:hover,
@@ -115,7 +116,7 @@ body {
     padding: 44px 9%;
 }
 
-/* PROFILE HERO */
+/* HERO */
 .profile-hero {
     background: linear-gradient(135deg, #1e40af, #1d4ed8);
     color: white;
@@ -185,6 +186,10 @@ body {
 .profile-avatar i {
     font-size: 3rem;
     color: white;
+}
+
+.profile-info {
+    width: 100%;
 }
 
 .profile-info h2 {
@@ -282,18 +287,18 @@ body {
 /* AI CHATBOT */
 .ai-chatbot {
     position: fixed;
-    right: 20px;
-    bottom: 20px;
-    width: 56px;
-    height: 56px;
+    right: 18px;
+    bottom: 18px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     background: linear-gradient(135deg, #1e40af, #1d4ed8);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
-    box-shadow: 0 10px 25px rgba(30, 64, 175, 0.35);
+    font-size: 1rem;
+    box-shadow: 0 8px 18px rgba(30, 64, 175, 0.30);
     cursor: pointer;
     transition: 0.25s ease;
     z-index: 9999;
@@ -304,7 +309,7 @@ body {
 }
 
 .ai-chatbot:hover {
-    transform: translateY(-4px) scale(1.05);
+    transform: translateY(-3px) scale(1.04);
     background: linear-gradient(135deg, #1e3a8a, #1e40af);
 }
 
@@ -418,10 +423,10 @@ body {
     }
 
     .ai-chatbot {
-        width: 52px;
-        height: 52px;
-        right: 16px;
-        bottom: 16px;
-        font-size: 1.1rem;
+        width: 40px;
+        height: 40px;
+        right: 14px;
+        bottom: 14px;
+        font-size: 0.9rem;
     }
 }

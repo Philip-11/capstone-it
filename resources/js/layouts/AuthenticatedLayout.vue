@@ -1,4 +1,5 @@
 <script setup>
+import AIChatbot from '@/components/AIChatbot.vue';
 import { Link } from '@inertiajs/vue3';
 </script>
 
@@ -25,6 +26,10 @@ import { Link } from '@inertiajs/vue3';
         </header>
 
         <main class="max-w-7xl mx-auto px-4 lg:px-8 pt-8 space-y-6">
+            <AIChatbot 
+             user-role="teacher"
+            greeting-message="Hi! I'm your AI helper! How can I help?"
+            />
             <slot />
         </main>
 

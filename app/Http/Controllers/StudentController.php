@@ -12,8 +12,17 @@ use Inertia\Inertia;
 class StudentController extends Controller
 {
     public function index(){
+        $user = Auth::user();
+
+        $gamificationData = $user->gamificationProfile ?? [
+            'xp' => 0,
+            'level' => 1,
+            'streak' => 0,
+        ];
+
         return Inertia::render('Student/Dashboard', [
             'joinedSubjects' => Auth::user()->joinedSubjects()->with('teacher')->get(),
+            'gamification' => $gamificationData,
         ]);
     }
 

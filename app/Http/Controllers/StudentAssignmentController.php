@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Assignment;
 use App\Models\AssignmentSubmission;
+use App\Services\GamificationService;
 use Auth;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -48,6 +49,12 @@ class StudentAssignmentController extends Controller
                 'submitted_at' => now(),
             ]
         );
+
+        $gamificationResult = GamificationService::awardXp(Auth::id(), 50);
+
+        if ($gamificationResult['leveled_up']){
+            session()->flash('level_up', 'Congratulations! You leveled up to ' . $gamificationResult['level'] . "!");
+        }
 
         return redirect()->route('student.subjects.show', $assignment->lesson->subject_id)
             ->with('message', 'Assignment/Activity Submitted Successfully');

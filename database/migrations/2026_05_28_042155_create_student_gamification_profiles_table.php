@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('xp')->default(0);
             $table->integer('level')->default(1);
             $table->integer('streak')->default(0);
-            $table->integer('streak')->default(0);
             $table->date('last_activity_date')->nullable();
             $table->timestamps();
         });

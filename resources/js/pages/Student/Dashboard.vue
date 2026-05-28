@@ -1,10 +1,12 @@
 <script setup>
 import AIChatbot from '@/components/AIChatbot.vue';
+import GamificationCard from '@/components/GamificationCard.vue';
 import { useForm, Link } from '@inertiajs/vue3';
 import { ref, nextTick } from 'vue';
 
 const props = defineProps({
     joinedSubjects: Array,
+    gamification: Object,
 });
 
 const form = useForm({
@@ -50,6 +52,13 @@ const getSubjectIcon = (subjectName) => {
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </Link>
         </header>
+
+        <div class="space-y-6">
+            <GamificationCard
+                :gamification="props.gamification"
+            />
+        </div>
+        
 
         //Ai Chatbot
         <AIChatbot 

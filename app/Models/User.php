@@ -86,5 +86,10 @@ class User extends Authenticatable
         return $this->hasOne(StudentGamificationProfile::class);
     }
 
+    public function badges()
+    {
+        return $this->belongsToMany(Badge::class, 'badge_user')->withTimestamps();
+    }
+
 
 }

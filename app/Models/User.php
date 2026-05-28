@@ -81,5 +81,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Subject::class, 'subject_student');
     }
 
+    public function gamificationProfile()
+    {
+        return $this->hasOne(StudentGamificationProfile::class);
+    }
+
 
 }

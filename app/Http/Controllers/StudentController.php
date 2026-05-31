@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attempt;
+use App\Models\Badge;
 use App\Models\Quiz;
 use App\Models\Subject;
 use Auth;
@@ -20,9 +21,15 @@ class StudentController extends Controller
             'streak' => 0,
         ];
 
+        $unlockedBadgeCodes = $user->badges()->pluck('badge_code')->values()->toArray();
+
+        $allBadges = Badge::all(['name', 'description', 'icon_class', 'badge_code']);
+
         return Inertia::render('Student/Dashboard', [
             'joinedSubjects' => Auth::user()->joinedSubjects()->with('teacher')->get(),
             'gamification' => $gamificationData,
+            'allBadges' => $allBadges,
+            'unlockedBadges' => $unlockedBadgeCodes,
         ]);
     }
 

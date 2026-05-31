@@ -36,10 +36,18 @@ class GamificationService
         $profile->last_activity_date = $today->toDateString();
         $profile->save();
 
+        $unlockedBadges = [];
+        $user = $profile->user;
+
+        if ($user){
+            $unlockedBadges = BadgeCheckerService::checkAll($user, $profile->streak);
+        }
+
         return [
             'level' => $profile->level,
             'streak' => $profile->streak,
             'leveled_up' => $leveledUp,
+            'unlocked_badges' => $unlockedBadges,
         ];
     }
 }

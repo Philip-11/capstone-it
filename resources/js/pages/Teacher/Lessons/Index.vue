@@ -55,7 +55,6 @@ const submitLesson = () => {
             queryParams: { _method: 'PUT' },
             onSuccess: () => {
                 cancelEdit();
-                alert('Course material parameters updated successfully!');
             }
         // Gagamit tayo ng post with _method=PUT para gumana nang ligtas ang file uploads sa Laravel update route
         });
@@ -65,7 +64,6 @@ const submitLesson = () => {
             forceFormData: true,
             onSuccess: () => {
                 form.reset();
-                alert('New course syllabus document deployed successfully!');
             }
         });
     }
@@ -76,7 +74,6 @@ const deleteLesson = (lesson) => {
     if (confirm(`Are you absolutely sure you want to completely purge "${lesson.title}" from your database repository?`)) {
         form.delete(route('teacher.lessons.destroy', lesson.id), {
             onSuccess: () => {
-                alert('Lesson record cleared successfully.');
                 if (currentLessonId.value === lesson.id) cancelEdit();
             }
         });
@@ -95,10 +92,6 @@ const processAI = (id) => {
     <div class="min-h-screen bg-gradient-to-br from-[#0c1a3a] via-[#1e3a8a] via-[#1e40af] to-[#3730a3] text-gray-900 font-sans pb-16">
 
         <main class="max-w-7xl mx-auto px-4 lg:px-6 pt-10 space-y-6">
-            <div v-if="$page.props.flash && $page.props.flash.message" class="bg-emerald-50 border border-emerald-300 text-emerald-800 p-4 rounded-xl shadow-sm flex items-center gap-2 text-sm font-medium">
-                <i class="fa-solid fa-circle-check text-emerald-600"></i>
-                {{ $page.props.flash.message }}
-            </div>
             
             <section class="bg-white rounded-[24px] p-6 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div class="flex items-center gap-3">

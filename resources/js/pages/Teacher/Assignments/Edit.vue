@@ -39,7 +39,6 @@ onMounted(() => {
 const updateAssignment = () => {
     form.put(route('teacher.assignments.update', props.assignment.id), {
         onSuccess: () => {
-            alert('Assignment updated successfully!');
         }
     });
 };

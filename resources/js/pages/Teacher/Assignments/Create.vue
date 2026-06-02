@@ -22,7 +22,6 @@ const submitAssignment = () => {
     form.post(route('teacher.assignments.store'), {
         onSuccess: () => {
             form.reset();
-            alert('Assignment deployed successfully!');
         }
     });
 };

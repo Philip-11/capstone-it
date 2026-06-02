@@ -30,6 +30,11 @@ import { Link } from '@inertiajs/vue3';
              user-role="teacher"
             greeting-message="Hi! I'm your AI helper! How can I help?"
             />
+
+            <div v-if="$page.props.flash && $page.props.flash.message" class="bg-emerald-50 border border-emerald-300 text-emerald-800 p-4 rounded-xl shadow-sm flex items-center gap-2 text-sm font-medium">
+                <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                {{ $page.props.flash.message }}
+            </div>
             <slot />
         </main>
 

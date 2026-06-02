@@ -10,6 +10,15 @@ const props = defineProps({
     gamification: Object,
     allBadges: Array,
     unlockedBadges: Array,
+
+    stats: {
+        type: Object,
+        default: () => ({
+            comleted: 0,
+            quizzes: 0,
+            pending: 0,
+        })
+    }
 });
 
 const form = useForm({
@@ -97,21 +106,21 @@ const getSubjectIcon = (subjectName) => {
                     <i class="fa-solid fa-circle-check text-blue-600 text-xl mb-3"></i>
                     <div>
                         <h4 class="text-gray-400 text-xs font-medium">Completed</h4>
-                        <p class="text-2xl font-bold text-gray-900">4</p>
+                        <p class="text-2xl font-bold text-gray-900">{{ props.stats.completed }}</p>
                     </div>
                 </div>
                 <div class="bg-white p-5 rounded-[18px] shadow-md flex flex-col justify-between">
                     <i class="fa-solid fa-clock text-blue-600 text-xl mb-3"></i>
                     <div>
-                        <h4 class="text-gray-400 text-xs font-medium">Hours</h4>
-                        <p class="text-2xl font-bold text-gray-900">42</p>
+                        <h4 class="text-gray-400 text-xs font-medium">Quizzes Taken</h4>
+                        <p class="text-2xl font-bold text-gray-900">{{ props.stats.quizzes }}</p>
                     </div>
                 </div>
                 <div class="bg-white p-5 rounded-[18px] shadow-md flex flex-col justify-between">
                     <i class="fa-solid fa-file-lines text-blue-600 text-xl mb-3"></i>
                     <div>
                         <h4 class="text-gray-400 text-xs font-medium">Pending</h4>
-                        <p class="text-2xl font-bold text-gray-900">2</p>
+                        <p class="text-2xl font-bold text-gray-900">{{ props.stats.pending }}</p>
                     </div>
                 </div>
             </section>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Attempt;
 use App\Models\Badge;
+use App\Models\Lesson;
+use App\Models\Progress;
 use App\Models\Quiz;
 use App\Models\Subject;
 use Auth;
@@ -14,6 +16,15 @@ class StudentController extends Controller
 {
     public function index(){
         $user = Auth::user();
+        $userId = $user->id;
+
+        $completedLessonsCount = Progress::where('user_id', $userId)->where('status', 'completed')->count();
+
+        $quizzesTakenCount = Attempt::where('user_id', $userId)->count();
+
+        $subjectIds = $user->joinedSubjects()->pluck('subjects.id')->toArray();
+        $totalLessonsInJoinedSubjects = Lesson::whereIn('subject_id', $subjectIds)->count();
+        $pendingLessonsCount = max(0, $totalLessonsInJoinedSubjects - $completedLessonsCount);
 
         $gamificationData = $user->gamificationProfile ?? [
             'xp' => 0,
@@ -30,6 +41,11 @@ class StudentController extends Controller
             'gamification' => $gamificationData,
             'allBadges' => $allBadges,
             'unlockedBadges' => $unlockedBadgeCodes,
+            'stats' => [
+                'completed' => $completedLessonsCount,
+                'quizzes' => $quizzesTakenCount,
+                'pending' => $pendingLessonsCount,
+            ],
         ]);
     }
 

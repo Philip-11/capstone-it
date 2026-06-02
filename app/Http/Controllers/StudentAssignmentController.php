@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Assignment;
 use App\Models\AssignmentSubmission;
+use App\Models\Progress;
 use App\Services\GamificationService;
 use Auth;
 use Illuminate\Http\Request;
@@ -47,6 +48,17 @@ class StudentAssignmentController extends Controller
                 'submission_text' => $request->submission_text,
                 'file_path' => $filePath ?? $request->old_file_path, //the old file stays if theres no new upload
                 'submitted_at' => now(),
+            ]
+        );
+
+        Progress::updateOrCreate(
+            [
+                'user_id' => Auth::id(),
+                'lesson_id' => $assignment->lesson_id,
+            ],
+            [
+                'status' => 'completed',
+                'last_accessed_at' => now(),
             ]
         );
 

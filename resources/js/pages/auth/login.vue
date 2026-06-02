@@ -21,7 +21,7 @@ const submit = () => {
         
         <div class="mb-6 flex flex-col items-center gap-3 text-center">
             <div class="w-14 h-14 rounded-2xl bg-white p-2.5 shadow-xl flex items-center justify-center">
-                <img src="/LOGO.png" alt="School Logo" class="w-full h-full object-contain" />
+                <img src="/images/LOGO.png" alt="School Logo" class="w-full h-full object-contain" />
             </div>
             <div>
                 <h1 class="text-xl font-bold text-white tracking-tight">GLMS</h1>

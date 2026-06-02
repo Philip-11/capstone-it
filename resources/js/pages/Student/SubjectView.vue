@@ -11,7 +11,7 @@ const props = defineProps({
         
         <header class="h-[66px] bg-white border-b-3 border-blue-600 px-[5%] md:px-[9%] flex items-center justify-between shadow-lg sticky top-0 z-50">
             <div class="flex items-center gap-2.5">
-                <img src="/LOGO.png" alt="School Logo" class="w-[30px] h-[30px] object-contain" />
+                <img src="/images/LOGO.png" alt="School Logo" class="w-[30px] h-[30px] object-contain" />
                 <h2 class="text-xl font-bold text-blue-900">GLMS</h2>
             </div>
 

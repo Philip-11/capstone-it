@@ -10,6 +10,7 @@ const props = defineProps({
     gamification: Object,
     allBadges: Array,
     unlockedBadges: Array,
+    upcomingAssignments: Array,
 
     stats: {
         type: Object,
@@ -30,6 +31,27 @@ const join = () => {
         onSuccess: () => form.reset(),
     });
 };
+
+const formatDueDate = (dateString) => {
+    const dueDate = new Date(dateString);
+    const today = new Date();
+
+    today.setHours(0,0,0,0);
+    dueDate.setHours(0,0,0,0);
+
+    const diffTime = dueDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0){
+        return { text: 'Due Today', class: 'bg-red-100 text-red-600'};
+    } else if (diffDays === 1){
+        return { text: 'Due Tomorrow', class: 'bg-amber-100 text-amber-600'};
+    } else if (diffDays <= 3){
+        return { text: `Due in ${diffDays} days`, class: 'bg-orange-100 text-orange-600'};
+    } else {
+        return { text: `Due: ${new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`, class: 'bg-blue-100 text-blue-600' };
+    }
+}
 
 const getSubjectIcon = (subjectName) => {
     const name = subjectName.toLowerCase();
@@ -77,7 +99,6 @@ const getSubjectIcon = (subjectName) => {
         />
         
 
-        //Ai Chatbot
         <AIChatbot 
             user-role="student"
             greeting-message="Hi! I'm your AI study buddy! Do you have any questions about your lessons?"
@@ -172,20 +193,32 @@ const getSubjectIcon = (subjectName) => {
                 </div>
 
                 <div class="space-y-2">
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-center p-3.5 rounded-xl hover:bg-gray-50 transition border border-gray-100 gap-2">
-                        <div>
-                            <h4 class="font-bold text-blue-900 text-sm md:text-base">Final Project: Web Portfolio</h4>
-                            <p class="text-gray-400 text-xs">Introduction to Web Development</p>
+                    <div v-if="props.upcomingAssignments && props.upcomingAssignments.length > 0" class="space-y-2">
+                        <div 
+                            v-for="assignment in props.upcomingAssignments" 
+                            :key="assignment.id"
+                            class="flex flex-col sm:flex-row justify-between sm:items-center p-3.5 rounded-xl hover:bg-gray-50 transition border border-gray-100 gap-2"
+                        >
+                            <div>
+                                <h4 class="font-bold text-blue-900 text-sm md:text-base">
+                                    {{ assignment.title }} </h4>
+                                <p class="text-gray-400 text-xs" v-if="assignment.lesson && assignment.lesson.subject">
+                                    {{ assignment.lesson.subject.name }}
+                                </p>
+                            </div>
+                            
+                            <span 
+                                :class="formatDueDate(assignment.due_date).class"
+                                class="px-3 py-1 rounded-full text-xs font-bold self-start sm:self-center transition-colors"
+                            >
+                                {{ formatDueDate(assignment.due_date).text }}
+                            </span>
                         </div>
-                        <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-bold self-start sm:self-center">Due Tomorrow</span>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-center p-3.5 rounded-xl hover:bg-gray-50 transition border border-gray-100 gap-2">
-                        <div>
-                            <h4 class="font-bold text-blue-900 text-sm md:text-base">Database Activity: SQL Queries</h4>
-                            <p class="text-gray-400 text-xs">Database Management</p>
-                        </div>
-                        <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-bold self-start sm:self-center">Due Soon</span>
+                    <div v-else class="text-center py-6 text-gray-400 text-sm border-2 border-dashed border-gray-100 rounded-xl">
+                        <i class="fa-solid fa-circle-check text-emerald-400 text-2xl mb-2 block"></i>
+                        Hooray! No upcoming assignments due.
                     </div>
                 </div>
             </section>

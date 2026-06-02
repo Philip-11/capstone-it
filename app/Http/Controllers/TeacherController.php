@@ -19,7 +19,7 @@ class TeacherController extends Controller
     {
         $user = Auth::user();
 
-        $lessons = $user->lessons()->with('quiz', 'subject')->latest()->get();
+        $lessons = $user->lessons()->with('quizzes', 'subject')->latest()->get();
         $subjects = Subject::where('user_id', '=', $user->id)->get();
 
         $quizAttempts = Attempt::whereHas('quiz', function($query) use ($user){
@@ -43,7 +43,7 @@ class TeacherController extends Controller
 
         // 2. Kuhanin lahat ng lessons na pagmamay-ari ng teacher na 'to (kasama ang linked quiz metadata structural state)
         $lessons = $user->lessons()
-            ->with('quiz') // Eager load para sa 'Linked Quiz' indicator badge mo sa UI catalog list
+            ->with('quizzes') // Eager load para sa 'Linked Quiz' indicator badge mo sa UI catalog list
             ->latest()
             ->get();
 

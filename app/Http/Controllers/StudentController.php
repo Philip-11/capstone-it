@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\Attempt;
 use App\Models\Badge;
 use App\Models\Lesson;
@@ -22,9 +23,16 @@ class StudentController extends Controller
 
         $quizzesTakenCount = Attempt::where('user_id', $userId)->count();
 
-        $subjectIds = $user->joinedSubjects()->pluck('subjects.id')->toArray();
+        $subjectIds = $user->joinedSubjects->pluck('id')->toArray();
         $totalLessonsInJoinedSubjects = Lesson::whereIn('subject_id', $subjectIds)->count();
-        $pendingLessonsCount = max(0, $totalLessonsInJoinedSubjects - $completedLessonsCount);
+        
+        $pendingAssignmentsCount = Assignment::whereHas('lesson', function($query) use ($subjectIds){
+            $query->whereIn('subject_id', $subjectIds);
+        })
+        ->whereDoesntHave('submissions', function($query) use ($userId){
+            $query->where('user_id', $userId);
+        })
+        ->count();
 
         $gamificationData = $user->gamificationProfile ?? [
             'xp' => 0,
@@ -36,6 +44,13 @@ class StudentController extends Controller
 
         $allBadges = Badge::all(['name', 'description', 'icon_class', 'badge_code']);
 
+        $upcomingAssignments = Assignment::whereHas('lesson', function($query) use ($subjectIds) {
+            $query->whereIn('subject_id', $subjectIds);
+        })->with('lesson.subject')->where('due_date', '>=', now())->whereDoesntHave('submissions', function($query) use ($userId){
+            $query->where('user_id', $userId);
+        })->orderBy('due_date', 'asc')->take(5)->get();
+
+
         return Inertia::render('Student/Dashboard', [
             'joinedSubjects' => Auth::user()->joinedSubjects()->with('teacher')->get(),
             'gamification' => $gamificationData,
@@ -44,8 +59,9 @@ class StudentController extends Controller
             'stats' => [
                 'completed' => $completedLessonsCount,
                 'quizzes' => $quizzesTakenCount,
-                'pending' => $pendingLessonsCount,
+                'pending' => $pendingAssignmentsCount,
             ],
+            'upcomingAssignments' => $upcomingAssignments,
         ]);
     }
 
@@ -72,7 +88,7 @@ class StudentController extends Controller
         $subject->load([
             'teacher',
             'lessons' => function($query){
-                $query->with(['quiz', 'assignments'])->latest();
+                $query->with(['quizzes', 'assignments'])->latest();
             }
         ]);
 

@@ -70,11 +70,13 @@ const props = defineProps({
                     </div>
 
                     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3.5 w-full lg:w-auto">
-                        
-                        <Link v-if="lesson.quiz" :href="route('student.quiz.show', lesson.quiz.id)" class="bg-gradient-to-br from-blue-800 to-blue-600 hover:from-blue-900 hover:to-blue-800 text-white px-3.5 py-2.5 rounded-xl font-bold text-sm inline-flex items-center gap-2 whitespace-nowrap shadow-sm transition w-full sm:w-auto justify-center">
+                        <div v-if="lesson.quizzes && lesson.quizzes.length > 0">
+                            <Link v-for="(quiz, index) in lesson.quizzes" :key="quiz.id" :href="route('student.quiz.show', quiz.id)" class="bg-gradient-to-br from-blue-800 to-blue-600 hover:from-blue-900 hover:to-blue-800 text-white m-1 px-3.5 py-2.5 rounded-xl font-bold text-sm inline-flex items-center gap-2 whitespace-nowrap shadow-sm transition w-full sm:w-auto justify-center">
                             <i class="fa-solid fa-gamepad text-xs"></i>
-                            Take Quiz
-                        </Link>
+                            Take Quiz {{ lesson.quizzes.length > 1 ? (index + 1) : '' }}
+                            </Link>
+                        </div>
+                        
 
                         <div v-if="lesson.assignments && lesson.assignments.length > 0" class="w-full lg:w-auto space-y-2">
                             <div v-for="assignment in lesson.assignments" :key="assignment.id" class="bg-blue-50/70 border border-blue-100 p-3.5 rounded-[14px] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3.5 min-w-full sm:min-w-[360px]">

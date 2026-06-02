@@ -51,16 +51,21 @@ class StudentAssignmentController extends Controller
             ]
         );
 
-        Progress::updateOrCreate(
-            [
-                'user_id' => Auth::id(),
-                'lesson_id' => $assignment->lesson_id,
-            ],
-            [
-                'status' => 'completed',
-                'last_accessed_at' => now(),
-            ]
-        );
+        try {
+            Progress::updateOrCreate(
+                [
+                    'user_id' => Auth::id(),
+                    'lesson_id' => $assignment->lesson_id,
+                ],
+                [
+                    'status' => 'completed',
+                    'last_accessed_at' => now(),
+                ]
+            );
+        } catch (\Exception $e){
+            dd("Database Error: " . $e->getMessage());
+        }
+        
 
         $gamificationResult = GamificationService::awardXp(Auth::id(), 50);
 

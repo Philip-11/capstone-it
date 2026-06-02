@@ -20,10 +20,10 @@ class Lesson extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    // A lesson can have one quiz attached to it
-    public function quiz(): HasOne
+    // A lesson can have many quizzes attached to it
+    public function quizzes(): hasMany
     {
-        return $this->hasOne(Quiz::class);
+        return $this->hasMany(Quiz::class);
     }
 
     // Tracking how many students have interacted with this lesson

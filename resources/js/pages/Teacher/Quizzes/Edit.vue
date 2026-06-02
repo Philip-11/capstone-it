@@ -33,7 +33,9 @@ const removeQuestion = (index) => {
 
 const submit = () => {
     form.put(route('teacher.quizzes.update', props.quiz.id), {
-        onSuccess: () => alert('Assessment parameters updated successfully!'),
+        onSuccess: () => {
+            
+        }
     });
 };
 </script>

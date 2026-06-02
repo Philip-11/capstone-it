@@ -36,7 +36,7 @@ const removeQuestion = (index) => {
 const submit = () => {
     form.post(route('teacher.quizzes.store'), {
         onSuccess: () => {
-            alert('Quiz schema deployed successfully!');
+
         }
     });
 };

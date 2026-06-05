@@ -76,4 +76,29 @@ class StudentAssignmentController extends Controller
         return redirect()->route('student.subjects.show', $assignment->lesson->subject_id)
             ->with('message', 'Assignment/Activity Submitted Successfully');
     }
+
+    public function assignments()
+    {
+        $user = Auth::user();
+        $userId = $user->id;
+
+        $subjectIds = $user->joinedSubjects->pluck('id')->toArray();
+
+        $assignments = Assignment::whereHas('lesson', function($query) use ($subjectIds){
+            $query->whereIn('subject_id', $subjectIds);
+        })
+        ->with(['lesson.subject', 'submissions' => function($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])
+        ->orderBy('due_date', 'asc')
+        ->get()
+        ->map(function ($assignment) {
+            $assignment->is_submitted = $assignment->submissions->isNotEmpty();
+            return $assignment;
+        });
+
+        return Inertia::render('Student/Assignments/AssignmentListView', [
+            'assignments' => $assignments
+        ]);
+    }
 }

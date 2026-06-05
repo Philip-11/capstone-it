@@ -7,6 +7,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\StudentAssignmentController;
+use App\Http\Controllers\StudentQuizController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -58,9 +59,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/student/subjects/{subject}', [StudentController::class, 'showSubject'])->name('student.subjects.show');
 
     Route::get('/student/quiz/{quiz}', [StudentController::class, 'showQuiz'])->name('student.quiz.show');
+    Route::get('/student/quizzes', [StudentQuizController::class, 'quizzes'])->name('student.quizzes.index');
     Route::post('/student/quiz/{quiz}/submit', [StudentController::class, 'submitQuiz'])->name('student.quiz.submit');
 
     Route::get('/student/assignments/{assignment}', [StudentAssignmentController::class, 'show'])->name('student.assignments.show');
+    Route::get('/student/assignments/', [StudentAssignmentController::class, 'assignments'])->name('student.assignments.index');
     Route::post('/student/assignments/{assignment}/submit', [StudentAssignmentController::class, 'submit'])->name('student.assignments.submit');
 
     //AI Route

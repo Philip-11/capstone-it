@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -11,6 +11,10 @@ const props = defineProps({
 const showModal = ref(false);
 const isEditMode = ref(false);
 const currentSubjectId = ref(null);
+
+const filterInstructor = ref('all');
+const filterTerm = ref('all');
+const filterCourse = ref('all');
 
 const form = useForm({
     name: '',
@@ -75,6 +79,37 @@ const getSubjectIcon = (name) => {
     if (lower.includes('hist') || lower.includes('soc')) return 'fa-earth-asia';
     return 'fa-book'; // Default fallback icon
 };
+
+const filteredSubjects = computed(() => {
+    return props.subjects.filter(subject => {
+        // 1. Filter sa Instructor (tumutugma sa user_id / teacher relation)
+        const matchInstructor = filterInstructor.value === 'all' || 
+                                String(subject.user_id) === String(filterInstructor.value);
+        
+        // 2. Filter sa Term (e.g., "1st Semester", "2nd Semester")
+        const matchTerm = filterTerm.value === 'all' || 
+                          subject.sem === filterTerm.value;
+        
+        // 3. Filter sa Course (e.g., "BSIT", "BSCS")
+        const matchCourse = filterCourse.value === 'all' || 
+                            subject.course === filterCourse.value;
+
+        // Dapat pumasa sa lahat ng tatlong kondisyon para lumabas ang subject card
+        return matchInstructor && matchTerm && matchCourse;
+    });
+});
+
+// Helper function para makakuha ng listahan ng Unique Terms mula sa subjects prop para sa dropdown array
+const uniqueTerms = computed(() => {
+    const terms = props.subjects.map(s => s.sem).filter(Boolean);
+    return [...new Set(terms)];
+});
+
+// Helper function para makakuha ng listahan ng Unique Courses mula sa subjects prop para sa dropdown array
+const uniqueCourses = computed(() => {
+    const courses = props.subjects.map(s => s.course).filter(Boolean);
+    return [...new Set(courses)];
+});
 </script>
 
 <template>
@@ -117,18 +152,49 @@ const getSubjectIcon = (name) => {
                 </button>
             </section>
 
+            <section class="bg-white rounded-[18px] p-5 shadow-md border border-gray-100 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-bold text-gray-400 uppercase tracking-wide">Filter by Instructor</label>
+                    <select v-model="filterInstructor" class="border p-2.5 rounded-xl text-sm font-semibold text-blue-900 bg-white focus:outline-blue-600 transition">
+                        <option value="all">All Instructors / Teachers</option>
+                        <option v-for="teacher in teachers" :key="teacher.id" :value="teacher.id">
+                            {{ teacher.name }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-bold text-gray-400 uppercase tracking-wide">Filter by Academic Term</label>
+                    <select v-model="filterTerm" class="border p-2.5 rounded-xl text-sm font-semibold text-blue-900 bg-white focus:outline-blue-600 transition">
+                        <option value="all">All Terms</option>
+                        <option v-for="sem in uniqueTerms" :key="sem" :value="sem">
+                            {{ sem }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-bold text-gray-400 uppercase tracking-wide">Filter by Course Track</label>
+                    <select v-model="filterCourse" class="border p-2.5 rounded-xl text-sm font-semibold text-blue-900 bg-white focus:outline-blue-600 transition">
+                        <option value="all">All Courses</option>
+                        <option v-for="course in uniqueCourses" :key="course" :value="course">
+                            {{ course }}
+                        </option>
+                    </select>
+                </div>
+            </section>
+
             <!-- Grid Display (Inihawig sa layout ng Enrolled Subjects ng Dashboard mo pre) -->
             <section class="space-y-4">
                 <div class="flex justify-between items-center text-white">
                     <h3 class="text-xl font-bold">Active Course Subjects</h3>
-                    <span class="text-xs font-semibold bg-white/10 px-3 py-1 rounded-md border border-white/10">Total Subjects: {{ subjects.length }}</span>
+                    <span class="text-xs font-semibold bg-white/10 px-3 py-1 rounded-md border border-white/10">Matched: {{ filteredSubjects.length }}</span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-[18px]">
-                    <div v-for="subject in subjects" :key="subject.id" class="bg-white rounded-[18px] p-[22px] border-l-[5px] border-blue-600 shadow-md flex flex-col justify-between hover:-translate-y-1 transition duration-200 min-h-[160px]">
+                    <div v-for="subject in filteredSubjects" :key="subject.id" class="bg-white rounded-[18px] p-[22px] border-l-[5px] border-blue-600 shadow-md flex flex-col justify-between hover:-translate-y-1 transition duration-200 min-h-[160px]">
                         
                         <div class="flex items-start gap-4">
-                            <!-- Dynamic Academic Icon style -->
                             <div class="w-11 h-11 min-w-[44px] rounded-[14px] bg-blue-100 text-blue-600 flex items-center justify-center text-lg shadow-sm">
                                 <i :class="['fa-solid', getSubjectIcon(subject.name)]"></i>
                             </div>
@@ -136,24 +202,21 @@ const getSubjectIcon = (name) => {
                             <div class="space-y-0.5 flex-1">
                                 <div class="flex items-center justify-between gap-2">
                                     <h4 class="font-bold text-blue-950 text-base line-clamp-1 flex-1">{{ subject.name }}</h4>
-                                    <!-- Subject Code Display Key Badge -->
-                                    <span class="text-[10px] font-black tracking-wider bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200 select-all" title="Click to select code">
+                                    <span class="text-[10px] font-black tracking-wider bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200 select-all">
                                         {{ subject.subject_code }}
                                     </span>
                                 </div>
                                 <p class="text-gray-400 text-sm">
-                                    Instructor: <span class="font-medium text-gray-700">{{ subject.teacher ? subject.teacher.name : 'Unassigned / Vacant' }}</span>
+                                    Instructor: <span class="font-medium text-gray-700">{{ subject.teacher ? subject.teacher.name : 'Unassigned' }}</span>
                                 </p>
-                                <p class="text-gray-400 text-sm">
-                                    Course: <span class="font-medium text-gray-700">{{ subject.course }}</span>
-                                </p>
-                                <p class="text-gray-400 text-sm">
-                                    Term: <span class="font-medium text-gray-700">{{ subject.sem }}</span>
-                                </p>
+                                
+                                <div class="flex gap-1.5 pt-1.5">
+                                    <span v-if="subject.course" class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-0.5 rounded-md">{{ subject.course }}</span>
+                                    <span v-if="subject.sem" class="text-[10px] font-bold bg-purple-50 text-purple-600 px-2 py-0.5 rounded-md">{{ subject.sem }}</span>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Action Group controls Footer of Card -->
                         <div class="flex items-center justify-end gap-2 border-t border-gray-50 pt-3 mt-4">
                             <button @click="openEditModal(subject)" class="px-3 py-1.5 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 text-gray-600 text-xs font-bold rounded-lg transition flex items-center gap-1">
                                 <i class="fa-solid fa-pen-to-square"></i> Edit
@@ -164,10 +227,9 @@ const getSubjectIcon = (name) => {
                         </div>
                     </div>
 
-                    <!-- Empty State Box -->
-                    <div v-if="subjects.length === 0" class="col-span-full bg-white/10 text-white/70 border border-dashed border-white/20 p-12 rounded-[18px] text-center">
-                        <i class="fa-solid fa-cubes text-3xl mb-3 opacity-40 block"></i>
-                        No academic subjects have been setup yet. Click the button above to launch the first curriculum class track!
+                    <div v-if="filteredSubjects.length === 0" class="col-span-full bg-white/10 text-white/70 border border-dashed border-white/20 p-12 rounded-[18px] text-center">
+                        <i class="fa-solid fa-filter-circle-xmark text-3xl mb-3 opacity-40 block"></i>
+                        No active subjects match your selected instructor, term, or course filters.
                     </div>
                 </div>
             </section>

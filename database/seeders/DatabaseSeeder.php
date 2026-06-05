@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Student',
             'email' => 'student@example.com',
+            'course' => 'BSIT',
             'password' => bcrypt('password'),
             'role' => 'student'
         ]);
@@ -45,12 +46,16 @@ class DatabaseSeeder extends Seeder
         Subject::create([
             'name' => 'Web Development',
             'subject_code' => 'WEB101',
+            'sem' => '1st',
+            'course' => 'BSIT',
             'user_id' => $user->id,
         ]);
 
         Subject::create([
             'name' => 'Mobile Development',
             'subject_code' => 'MOBDEV101',
+            'sem' => '1st',
+            'course' => 'BSIT',
             'user_id' => $user->id,
         ]);
 

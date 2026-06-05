@@ -23,9 +23,9 @@ const isUnlocked = (badgeCode) => {
                 <i class="fa-solid fa-trophy text-amber-500 text-xs"></i>
             </div>
             <div>
-                <h4 class="font-bold text-slate-800 text-sm tracking-tight">Mga Parangal at Badges</h4>
+                <h4 class="font-bold text-slate-800 text-sm tracking-tight">Achievements and Badges</h4>
                 <p class="text-[10px] text-gray-500 font-medium">
-                    Naka-unlock ka ng {{ unlockedBadges.length }} sa {{ allBadges.length }} na Medals
+                    You have unlocked {{ unlockedBadges.length }} out of {{ allBadges.length }} Medals
                 </p>
             </div>
         </div>
@@ -53,10 +53,10 @@ const isUnlocked = (badgeCode) => {
                         <p class="font-bold text-amber-400 mb-0.5">{{ badge.name }}</p>
                         <p class="text-gray-300 font-medium">{{ badge.description }}</p>
                         <p v-if="!isUnlocked(badge.badge_code)" class="text-rose-400 font-bold text-[9px] mt-1 uppercase tracking-wider">
-                            🔒 Naka-lock pa
+                            🔒 Still Locked
                         </p>
                         <p v-else class="text-emerald-400 font-bold text-[9px] mt-1 uppercase tracking-wider">
-                            ✨ Na-unlock Na!
+                            ✨ Unlocked!
                         </p>
                     </div>
                     <div class="w-2 h-2 bg-slate-900 rotate-45 -mt-1"></div>

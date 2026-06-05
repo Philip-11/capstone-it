@@ -17,7 +17,7 @@ class BadgeSeeder extends Seeder
             ['badge_code' => 'first_submission'],
             [
                 'name' => 'First Blood',
-                'description' => 'Matagumpay na nagpasa ng iyong kauna-unahang assignment.',
+                'description' => 'You submitted your very first assignment!',
                 'icon_class' => 'fa-graduation-cap text-blue-500'
             ]
         );
@@ -26,7 +26,7 @@ class BadgeSeeder extends Seeder
             ['badge_code' => 'streak_3'],
             [
                 'name' => 'Loyal Scholar',
-                'description' => 'Napanatili ang active study streak sa loob ng 3 araw.',
+                'description' => 'You have logged in for 3 straight days.',
                 'icon_class' => 'fa-fire text-orange-500'
             ]
         );

@@ -99,7 +99,7 @@ const processAI = (id) => {
                         <i class="fa-solid fa-book-bookmark text-sm"></i>
                     </div>
                     <div>
-                        <h1 class="text-xl md:text-2xl font-bold text-blue-950">Academic Content Warehouse</h1>
+                        <h1 class="text-xl md:text-2xl font-bold text-blue-950">Lesson Content Warehouse</h1>
                         <p class="text-xs text-gray-500">Formulate text lectures, link subject metrics, and attach core reference files.</p>
                     </div>
                 </div>
@@ -111,7 +111,7 @@ const processAI = (id) => {
                     <div class="border-b border-gray-100 pb-3 flex justify-between items-center">
                         <h3 class="font-bold text-blue-950 text-md flex items-center gap-2">
                             <i class="fa-solid" :class="isEditing ? 'fa-pen-to-square text-amber-600' : 'fa-circle-plus text-purple-600'"></i>
-                            {{ isEditing ? 'Modify Lesson Parameters' : 'Deploy New Syllabus Unit' }}
+                            {{ isEditing ? 'Modify Lesson Parameters' : 'Deploy New Lesson' }}
                         </h3>
                         <button v-if="isEditing" @click="cancelEdit" class="text-[10px] font-bold text-gray-400 hover:text-gray-600 border border-gray-200 px-2 py-1 rounded-md bg-gray-50 transition">
                             Cancel Edit Mode

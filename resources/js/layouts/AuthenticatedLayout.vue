@@ -20,7 +20,7 @@ import { Link } from '@inertiajs/vue3';
             </nav>
 
             <Link method="post" href="/logout" as="button" class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-2.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition hover:from-red-600 hover:to-red-700 shadow-md">
-                Logout Dashboard
+                Logout
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </Link>
         </header>

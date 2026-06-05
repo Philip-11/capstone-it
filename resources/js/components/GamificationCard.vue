@@ -35,7 +35,7 @@ const progressPercentage = computed(() => {
                 <div>
                     <h4 class="font-bold text-sm tracking-tight">Student Ranking Profile</h4>
                     <p class="text-[11px] text-blue-200 font-medium">
-                        {{ gamification.xp }} Kabuuang XP na Naipon
+                        {{ gamification.xp }} All XP gained
                     </p>
                 </div>
             </div>
@@ -63,7 +63,7 @@ const progressPercentage = computed(() => {
             </div>
             
             <p class="text-[10px] text-blue-300 italic font-medium text-center pt-0.5">
-                Kailangan mo pa ng {{ xpPerLevel - currentLevelXp }} XP para mag-Level Up! 🚀
+                You need {{ xpPerLevel - currentLevelXp }} XP more to level up! 🚀
             </p>
         </div>
     </div>

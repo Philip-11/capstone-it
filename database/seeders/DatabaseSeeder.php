@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Student',
             'email' => 'student@example.com',
             'password' => bcrypt('password'),
-            'role' => 'student,'
+            'role' => 'student'
         ]);
 
         Subject::create([

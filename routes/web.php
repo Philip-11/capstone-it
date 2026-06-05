@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AIChatController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuizController;
@@ -69,4 +70,12 @@ Route::middleware(['auth'])->group(function () {
     //AI Route
     Route::get('/teacher/ai-chat/history', [AIChatController::class, 'getChatHistory'])->name('teacher.ai-chat.history');
     Route::post('/teacher/ai-chat', [AIChatController::class, 'handleChat'])->name('teacher.ai-chat');
+});
+
+Route::middleware(['auth'])->group(function () {
+    // Admin Routes
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');
+    Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 });

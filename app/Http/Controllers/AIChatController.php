@@ -82,7 +82,7 @@ class AIChatController extends Controller
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'x-goog-api-key' => $apiKey,
-            ])->post("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={$apiKey}", [
+            ])->post("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key={$apiKey}", [
                 'contents' => [
                     [
                         'parts' => [

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssignmentSubmission;
 use App\Models\Attempt;
 use App\Models\Lesson;
 use App\Models\Quiz;
 use App\Models\Subject;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -29,10 +31,31 @@ class TeacherController extends Controller
         ->latest()
         ->get();
 
+        $assignmentSubmissions = AssignmentSubmission::whereHas('assignment.lesson', function ($query) use ($user){
+            $query->where('user_id', $user->id);
+        })
+        ->with(['student', 'assignment.lesson'])
+        ->latest()
+        ->get()
+        ->map(function($submission) {
+            $isLate = false;
+
+            if($submission->assignment && $submission->assignment->due_date){
+                $dueDate = Carbon::parse($submission->assignment->due_date)->setTimezone('Asia/Manila');
+                $submittedDate = Carbon::parse($submission->created_at)->setTimezone('Asia/Manila');
+
+                $isLate = $submittedDate->gt($dueDate);
+            }
+
+            $submission->is_late = $isLate;
+            return $submission;
+        });
+
         return Inertia::render('Teacher/Dashboard', [
             'lessons' => $lessons,
             'subjects' => $subjects,
             'quizAttempts' => $quizAttempts,
+            'assignmentSubmissions' => $assignmentSubmissions,
         ]);
     }
 

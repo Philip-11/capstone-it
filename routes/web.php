@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCourseworkController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AIChatController;
@@ -84,4 +85,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/subjects', [SubjectController::class, 'store'])->name('admin.subjects.store');
     Route::put('/admin/subjects/{subject}', [SubjectController::class, 'update'])->name('admin.subjects.update');
     Route::delete('/admin/subjects/{subject}', [SubjectController::class, 'destroy'])->name('admin.subjects.destroy');
+
+    // Admin Override Management Routes
+    Route::get('/admin/subjects/{subject}/manage', [AdminCourseworkController::class, 'manageSubject'])->name('admin.subjects.manage');
+    
+    // Lessons CRUD ng Admin
+    Route::post('/admin/subjects/{subject}/lessons', [AdminCourseworkController::class, 'storeLesson'])->name('admin.lessons.store');
+    Route::put('/admin/lessons/{lesson}', [AdminCourseworkController::class, 'updateLesson'])->name('admin.lessons.update');
+    Route::delete('/admin/lessons/{lesson}', [AdminCourseworkController::class, 'destroyLesson'])->name('admin.lessons.destroy');
 });

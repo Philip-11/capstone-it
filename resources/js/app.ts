@@ -6,22 +6,22 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
-    // resolve: (name) => {
-    //    const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue', {eager: true});
-    //    return pages[`./pages/${name}.vue`];
-    // },
-
     resolve: (name) => {
-        const pages = import.meta.glob('./pages/**/*.vue', { eager: true });
-
-        const page = pages[`./pages/${name}.vue`] as any;
-
-        if (!page){
-            throw new Error(`Page not found: ./pages/${name}.vue`);
-        }
-
-        return (page.default || page) as DefineComponent;
+       const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue', {eager: true});
+       return pages[`./pages/${name}.vue`];
     },
+
+    // resolve: (name) => {
+    //     const pages = import.meta.glob('./pages/**/*.vue', { eager: true });
+
+    //     const page = pages[`./pages/${name}.vue`] as any;
+
+    //     if (!page){
+    //         throw new Error(`Page not found: ./pages/${name}.vue`);
+    //     }
+
+    //     return (page.default || page) as DefineComponent;
+    // },
     
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props)})

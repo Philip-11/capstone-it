@@ -1,4 +1,4 @@
-FROM richarvey/nginx-php-fpm:3.1.6
+FROM richarvey/nginx-php-fpm:php83-latest
 
 # 1. I-install si Node.js at NPM gamit ang 'apk' (Alpine Package Manager)
 RUN apk update && apk add --no-cache nodejs npm

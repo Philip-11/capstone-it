@@ -91,5 +91,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Badge::class, 'badge_user')->withTimestamps();
     }
 
-
+    public function submissions()
+    {
+        return $this->hasMany(AssignmentSubmission::class, 'user_id');
+    }
 }

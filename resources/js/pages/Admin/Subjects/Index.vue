@@ -201,6 +201,13 @@ const uniqueCourses = computed(() => {
                             </div>
 
                             <div class="flex items-center justify-end gap-2 border-t border-gray-50 pt-3 mt-4">
+                                <Link 
+                                    :href="route('admin.subjects.manage', subject.id)" 
+                                    class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg transition flex items-center gap-1 shadow-sm active:scale-95"
+                                >
+                                    <i class="fa-solid fa-gauge-high"></i> Manage Coursework
+                                </Link>
+                                
                                 <button @click="openEditModal(subject)" class="px-3 py-1.5 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 text-gray-600 text-xs font-bold rounded-lg transition flex items-center gap-1">
                                     <i class="fa-solid fa-pen-to-square"></i> Edit
                                 </button>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminCourseworkController;
+use App\Http\Controllers\Admin\AIPerformanceController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AIChatController;
@@ -96,4 +97,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/subjects/{subject}/lessons', [AdminCourseworkController::class, 'storeLesson'])->name('admin.lessons.store');
     Route::put('/admin/lessons/{lesson}', [AdminCourseworkController::class, 'updateLesson'])->name('admin.lessons.update');
     Route::delete('/admin/lessons/{lesson}', [AdminCourseworkController::class, 'destroyLesson'])->name('admin.lessons.destroy');
+
+    //AI Report
+    Route::get('/admin/subjects/{subject}/students/{student}/ai-report', [AIPerformanceController::class, 'generateReport'])->name('admin.subjects.student.ai-report');
 });

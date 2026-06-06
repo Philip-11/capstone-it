@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignment;
+use App\Models\AssignmentSubmission;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -106,5 +107,18 @@ class AssignmentController extends Controller
 
         return redirect()->route('teacher.assignments.index')
             ->with('message', 'Assignment deleted.');
+    }
+
+    public function gradeSubmission(Request $request, AssignmentSubmission $submission)
+    {
+        $request->validate([
+            'grade' => 'required|integer|min:0|max:100',
+        ]);
+
+        $submission->update([
+            'grade' => $request->grade
+        ]);
+
+        return back()->with('success', 'Submission graded successfully');
     }
 }

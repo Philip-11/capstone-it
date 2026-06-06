@@ -8,12 +8,16 @@ const props = defineProps({
     analytics: Object,
     ai_report: Object
 });
+
+const triggerPrint = () => {
+    window.print();
+};
 </script>
 
 <template>
     <Head :title="'AI Analytics - ' + student.name" />
 
-    <div class="min-h-screen bg-gradient-to-br from-[#0c1a3a] via-[#1e3a8a] via-[#1e40af] via-[#1d4ed8] to-[#3730a3] text-gray-900 font-sans pb-12">
+    <div class="min-h-screen bg-gradient-to-br from-[#0c1a3a] via-[#1e3a8a] via-[#1e40af] via-[#1d4ed8] to-[#3730a3] text-gray-900 font-sans pb-12 print:hidden">
         
         <AdminLayout>
             <main class="max-w-6xl mx-auto px-4 md:px-[9%] pt-11 space-y-6">
@@ -24,10 +28,22 @@ const props = defineProps({
                     <span class="text-white font-black">{{ student.name }} Analysis</span>
                 </div>
 
+                <div class="flex justify-between items-center bg-white/15 backdrop-blur-md p-4 rounded-2xl border border-white/10 mb-6 print:hidden">
+                    <span class="text-white text-xs font-semibold">
+                        <i class="fa-solid fa-circle-info text-blue-300 mr-1"></i> Ready for administrative documentation layout.
+                    </span>
+                    <button 
+                        @click="triggerPrint" 
+                        class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-5 py-2 rounded-xl text-xs font-black hover:from-emerald-700 shadow-lg transition active:scale-95 flex items-center gap-1.5"
+                    >
+                        <i class="fa-solid fa-print"></i> Print Academic Report
+                    </button>
+                </div>
+
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                     
                     <div class="lg:col-span-1 space-y-5">
-                        <div class="bg-white rounded-[22px] p-6 shadow-xl border border-gray-100 space-y-5">
+                        <div class="bg-white rounded-[22px] p-6 shadow-xl border border-gray-100 space-y-5 print:shadow-none print:border-slate-300 print:rounded-none">
                             <div class="text-center pb-4 border-b">
                                 <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl mx-auto flex items-center justify-center text-2xl font-black mb-3 shadow-inner">
                                     {{ student.name.substring(0, 2).toUpperCase() }}
@@ -49,7 +65,7 @@ const props = defineProps({
                                 <h4 class="text-xs font-black text-gray-400 uppercase tracking-widest"><i class="fa-solid fa-file-lines text-indigo-500"></i> Coursework Logs</h4>
                                 <div class="bg-slate-50 p-3.5 rounded-xl space-y-2 border">
                                     <div class="flex justify-between text-xs"><span class="text-gray-500">Total Submissions:</span><span class="font-bold text-slate-800">{{ analytics.assignments_summary.total_submitted }} files</span></div>
-                                    <div class="flex justify-between text-xs"><span class="text-gray-500">On-Time Subits:</span><span class="font-bold text-emerald-600">{{ analytics.assignments_summary.on_time }}</span></div>
+                                    <div class="flex justify-between text-xs"><span class="text-gray-500">On-Time Submits:</span><span class="font-bold text-emerald-600">{{ analytics.assignments_summary.on_time }}</span></div>
                                     <div class="flex justify-between text-xs"><span class="text-gray-500">Late Overdue:</span><span class="font-bold text-red-500">{{ analytics.assignments_summary.late }}</span></div>
                                     <div class="flex justify-between text-xs border-t pt-1.5"><span class="text-gray-600 font-semibold">Average Grade:</span><span class="font-bold text-indigo-600">{{ analytics.assignments_summary.average_grade_percentage }}</span></div>
                                 </div>
@@ -58,7 +74,7 @@ const props = defineProps({
                     </div>
 
                     <div class="lg:col-span-2 space-y-6">
-                        <div class="bg-white/95 backdrop-blur-sm rounded-[24px] p-6 md:p-8 shadow-2xl border border-blue-900/10 space-y-6">
+                        <div class="bg-white/95 backdrop-blur-sm rounded-[24px] p-6 md:p-8 shadow-2xl border border-blue-900/10 space-y-6 print:shadow-none print:border-slate-300 print:rounded-none">
                             
                             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 gap-3">
                                 <div class="flex items-center gap-3">
@@ -125,5 +141,106 @@ const props = defineProps({
             </main>
         </AdminLayout>
 
+    </div>
+
+
+    <div class="hidden print:block text-slate-900 p-6 font-sans bg-white text-xs leading-relaxed print:break-after-page">
+    
+        <div class="text-center border-b-4 border-double border-slate-800 pb-4 mb-6">
+            <h1 class="text-xl font-black uppercase tracking-wider text-slate-950">CAMPUS STUDENT ACADEMIC CONTROL CENTER</h1>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-0.5">Automated AI Diagnostics & Evaluation Dossier</p>
+            <p class="text-[10px] text-gray-400 italic mt-1">Generated via Gemini AI Core Implementation Engine</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 border border-slate-300 bg-slate-50 p-4 rounded-xl mb-6">
+            <div>
+                <p class="text-[11px] font-bold text-slate-500 uppercase">Student Evaluated:</p>
+                <p class="text-base font-black text-slate-950">{{ student?.name || 'N/A' }}</p>
+                <p class="text-xs text-slate-600">Student Academic Account ID: #{{ student?.id }}</p>
+            </div>
+            <div>
+                <p class="text-[11px] font-bold text-slate-500 uppercase">Subject Parameters:</p>
+                <p class="text-base font-black text-slate-950">{{ subject?.name || 'N/A' }}</p>
+                <p class="text-xs text-slate-600">Course Code: {{ subject?.code || 'N/A' }}</p>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <h3 class="text-xs font-black uppercase tracking-wider text-slate-800 border-b border-slate-300 pb-1 mb-3 flex items-center gap-1">
+                I. Quantitative Performance Metrics
+            </h3>
+            <div class="grid grid-cols-4 gap-2 text-center">
+                <div class="border border-slate-200 p-2.5 rounded-lg">
+                    <span class="block text-[10px] font-bold text-slate-500 uppercase">Coursework Submits</span>
+                    <span class="text-lg font-black text-slate-950">{{ analytics.assignments_summary?.total_submitted ?? 0 }}</span>
+                </div>
+                <div class="border border-slate-200 p-2.5 rounded-lg">
+                    <span class="block text-[10px] font-bold text-slate-500 uppercase">On-Time Submissions</span>
+                    <span class="text-lg font-black text-emerald-700">{{ analytics.assignments_summary?.on_time ?? 0 }}</span>
+                </div>
+                <div class="border border-slate-200 p-2.5 rounded-lg">
+                    <span class="block text-[10px] font-bold text-slate-500 uppercase">Average Grade Metric</span>
+                    <span class="text-lg font-black text-blue-800">{{ analytics.assignments_summary?.average_grade_percentage ?? 0 }}</span>
+                </div>
+                <div class="border border-slate-200 p-2.5 rounded-lg">
+                    <span class="block text-[10px] font-bold text-slate-500 uppercase">Quiz Evaluated Logs</span>
+                    <span class="text-lg font-black text-slate-950">{{ analytics.quizzes_summary?.total_quizzes_taken ?? 0 }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <h3 class="text-xs font-black uppercase tracking-wider text-slate-800 border-b border-slate-300 pb-1 flex items-center gap-1">
+                II. AI Generative Cognitive Summary & Diagnostic Assessment
+            </h3>
+            
+            <div>
+                <h4 class="text-xs font-bold text-slate-700 uppercase">[Academic Standing Status]</h4>
+                <p class="text-sm font-black text-indigo-900 mt-0.5 ml-2">👉 {{ ai_report?.standing || 'No Assessment Logged' }}</p>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold text-slate-700 uppercase">[Executive Narrative Evaluation]</h4>
+                <p class="text-xs text-slate-800 mt-1 ml-2 text-justify indent-6">{{ ai_report?.summary || 'N/A' }}</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 pt-2">
+                <div>
+                    <h4 class="text-xs font-bold text-emerald-800 uppercase">[Identified Competencies / Strengths]</h4>
+                    <ul class="list-disc list-inside text-xs text-slate-700 mt-1 ml-2 space-y-1">
+                        <li v-for="(strength, idx) in ai_report?.strengths" :key="idx">{{ strength }}</li>
+                        <li v-if="!ai_report?.strengths?.length" class="italic text-gray-400">None registered.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-red-800 uppercase">[Areas for Growth / Vulnerabilities]</h4>
+                    <ul class="list-disc list-inside text-xs text-slate-700 mt-1 ml-2 space-y-1">
+                        <li v-for="(weakness, idx) in ai_report?.weaknesses" :key="idx">{{ weakness }}</li>
+                        <li v-if="!ai_report?.weaknesses?.length" class="italic text-gray-400">None registered.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <h4 class="text-xs font-bold text-slate-700 uppercase">[Strategic Intervention & Recommendations]</h4>
+                <ul class="list-decimal list-inside text-xs text-slate-800 mt-1 ml-2 space-y-1">
+                    <li v-for="(rec, idx) in ai_report?.recommendations" :key="idx" class="text-justify">{{ rec }}</li>
+                    <li v-if="!ai_report?.recommendations?.length" class="italic text-gray-400">No interventions required.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-16 grid grid-cols-2 gap-12 text-center pt-8">
+            <div>
+                <div class="w-48 mx-auto border-b border-slate-400 h-6"></div>
+                <p class="text-[10px] font-bold uppercase text-slate-500 mt-1">Instructor / Evaluator Signature</p>
+                <p class="text-[9px] text-slate-400">Date Logged: {{ new Date().toLocaleDateString() }}</p>
+            </div>
+            <div>
+                <div class="w-48 mx-auto border-b border-slate-400 h-6"></div>
+                <p class="text-[10px] font-bold uppercase text-slate-500 mt-1">Office of Academic Affairs Certification</p>
+                <p class="text-[9px] text-slate-400">System Verification Token: SECURE_AI_LOG_PACKET</p>
+            </div>
+        </div>
     </div>
 </template>

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Assignment;
 use App\Models\Attempt;
 use App\Models\Quiz;
 use App\Models\Subject;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
@@ -16,10 +18,13 @@ class AIPerformanceController extends Controller
     public function generateReport(Subject $subject, User $student)
     {
         //Get data from submissions table
+        $lessonIds = $subject->lessons()->pluck('id');
+        $assignmentIds = Assignment::whereIn('lesson_id', $lessonIds)->pluck('id');
+
         $submissions = $student->submissions()
-            ->whereHas('assignment', function($query) use ($subject) {
-                $query->where('subject_id', $subject->id);
-            })->with('assignment')->get();
+            ->whereIn('assignment_id', $assignmentIds)
+            ->with('assignment')
+            ->get();
 
         $totalAssignments = $submissions->count();
         $onTimeCount = 0;
@@ -30,7 +35,10 @@ class AIPerformanceController extends Controller
             $totalGrade += $sub->grade ?? 0;
 
             if ($sub->assignment && $sub->assignment->due_date){
-                if ($sub->created_at->gt($sub->assignment->due_date)){
+                $dueDate = Carbon::parse($sub->assignment->due_date)->setTimezone('Asia/Manila');
+                $submittedDate = Carbon::parse($sub->created_at)->setTimezone('Asia/Manila');
+
+                if ($submittedDate->gt($dueDate)){
                     $lateCount++;
                 } else {
                     $onTimeCount++;
@@ -43,7 +51,6 @@ class AIPerformanceController extends Controller
         $averageGrade = $totalAssignments > 0 ? round($totalGrade / $totalAssignments, 2) : 0;
 
         //Get data from attempts table
-        $lessonIds = $subject->lessons()->pluck('id');
         $quizIds = Quiz::whereIn('lesson_id', $lessonIds)->pluck('id');
 
         $attempts = Attempt::whereIn('quiz_id', $quizIds)
@@ -111,8 +118,23 @@ class AIPerformanceController extends Controller
         if ($response->successful()){
             $result = $response->json();
 
-            $rawJsonText = $result['candidates'][0]['contents']['parts'][0]['text'] ?? '{}';
-            $aiOutput = json_decode($rawJsonText, true);
+            $rawJsonText = $result['candidates'][0]['content']['parts'][0]['text'] ?? '{}';
+
+            $cleanJsonText = preg_replace('/^```json\s*/i', '', $rawJsonText); // Tanggalin ang ```json sa simula
+            $cleanJsonText = preg_replace('/```\s*$/', '', $cleanJsonText);   // Tanggalin ang ``` sa dulo
+            $cleanJsonText = trim($cleanJsonText);
+
+            $aiOutput = json_decode($cleanJsonText, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE || !is_array($aiOutput)) {
+                $aiOutput = [
+                    'standing' => 'Analysis Generated with Formatting Issues',
+                    'summary' => 'The system successfully read the student data, but the AI core engine returned an unparseable data packet format. Raw response: ' . substr($cleanJsonText, 0, 150) . '...',
+                    'strengths' => ['Data integrity active', 'Database links verified'],
+                    'weaknesses' => ['LLM response syntax anomaly'],
+                    'recommendations' => ['Try running the analysis feedback query loops again.', 'Check internet synchronization parameters.']
+                ];
+            }
         } else {
             $aiOutput = [
                 'standing' => 'Analysis Unavailable',

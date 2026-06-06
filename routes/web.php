@@ -12,8 +12,11 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\StudentAssignmentController;
 use App\Http\Controllers\StudentQuizController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
-
+Route::get('/', function () {
+    return Inertia::render('auth/login');
+});
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);

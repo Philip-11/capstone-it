@@ -13,7 +13,9 @@ use App\Http\Controllers\StudentAssignmentController;
 use App\Http\Controllers\StudentQuizController;
 use Illuminate\Support\Facades\Route;
 
-
+Route::get('/', function() {
+    return redirect()->route('login');
+});
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);

@@ -1,20 +1,19 @@
 FROM richarvey/nginx-php-fpm:3.1.6
 
-# 1. I-install si Node.js at NPM (Kailangan ito para ma-compile ang Vue/Inertia mo)
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
+# 1. I-install si Node.js at NPM gamit ang 'apk' (Alpine Package Manager)
+RUN apk update && apk add --no-cache nodejs npm
 
-# 2. I-set ang ENV variables na kailangan ng richarvey image para sa Laravel
+# 2. Ituro ang Nginx Root sa Public folder ng Laravel
 ENV WEBROOT=/var/www/html/public
 ENV APP_ENV=production
 
-# 3. Kopyahin ang project files mo (sa image na ito, /var/www/html ang default folder)
+# 3. Kopyahin ang code mo papunta sa loob ng container
 COPY . /var/www/html
 
-# 4. I-install ang PHP at Node dependencies, tapos i-build ang Vue assets
+# 4. I-install ang Composer at NPM packages, tsaka i-build si Vue
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install
 RUN npm run build
 
-# 5. Ayusin ang permissions
-RUN chown -R memcached:memcached /var/www/html/storage /var/www/html/bootstrap/cache
+# 5. Ayusin ang permissions ng Laravel folders (In-adjust para sa Alpine user group)
+RUN chown -R nginx:nginx /var/www/html/storage /var/www/html/bootstrap/cache

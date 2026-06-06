@@ -46,3 +46,8 @@ RUN sed -i 's|root /var/www/html;|root /var/www/html/public;|g' /etc/nginx/conf.
 RUN chown -R nobody:nobody /var/www/html/storage /var/www/html/bootstrap/cache
 
 USER nobody
+
+CMD if [ ! -f /tmp/seeded.txt ]; then \
+    php artisan migrate:fresh --seed --force && touch /tmp/seeded.txt; \
+    fi && \
+    /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

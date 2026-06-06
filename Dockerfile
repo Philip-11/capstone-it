@@ -17,6 +17,7 @@ RUN apk update && apk add --no-cache \
     php83-dom \
     php83-tokenizer \
     php83-xmlwriter \
+    php83-iconv \
     nodejs \
     npm
 

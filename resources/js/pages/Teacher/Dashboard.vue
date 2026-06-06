@@ -1,12 +1,36 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 
 defineOptions({ layout: AuthenticatedLayout });
 
 const props = defineProps({
     quizAttempts: Array,
+    assignmentSubmissions: Array,
 });
+
+const processGrading = (submission) => {
+    // 1. Validation check sa input pre
+    if (submission.inputScore === undefined || submission.inputScore === '') {
+        alert('Please specify a valid numeric grade value first before clicking save.');
+        return;
+    }
+    
+    if (submission.inputScore < 0 || submission.inputScore > 100) {
+        alert('Academic Grade Over-range: Please keep scores strictly between 0 and 100 points.');
+        return;
+    }
+
+    // 2. Put action call via Inertia core router pre
+    router.put(route('teacher.submissions.grade', submission.id), {
+        grade: submission.inputScore
+    }, {
+        preserveScroll: true, // Para hindi umalon o tumalon ang scrollbar kapag clinick si save
+        onSuccess: () => {
+            submission.inputScore = ''; // Reset input buffer box pre pagkatapos ma-save
+        }
+    });
+};
 </script>
 
 <template>
@@ -81,6 +105,85 @@ const props = defineProps({
                             <tr v-if="quizAttempts.length === 0">
                                 <td colspan="5" class="px-6 py-12 text-center text-gray-400 italic text-sm">
                                     No records found. No student attempts logged in current evaluation parameters.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="bg-white p-6 md:p-8 rounded-[24px] shadow-xl border border-gray-100 space-y-4">
+                <div>
+                    <h2 class="text-xl font-bold text-blue-950 flex items-center gap-2">
+                        <i class="fa-solid fa-file-arrow-up text-indigo-500"></i> Coursework & Assignment Submission Audit
+                    </h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Track individual student assignment file submissions, evaluate timing compliance, and register numeric grades.</p>
+                </div>
+                
+                <div class="overflow-x-auto rounded-xl border border-gray-100">
+                    <table class="min-w-full divide-y divide-gray-200 text-xs md:text-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-4.5 text-left font-bold text-gray-600 uppercase tracking-wider">Student Academic Name</th>
+                                <th class="px-6 py-4.5 text-left font-bold text-gray-600 uppercase tracking-wider">Assignment Header</th>
+                                <th class="px-6 py-4.5 text-left font-bold text-gray-600 uppercase tracking-wider">Timing Status</th>
+                                <th class="px-6 py-4.5 text-left font-bold text-gray-600 uppercase tracking-wider">Evaluated Grade</th>
+                                <th class="px-6 py-4.5 text-left font-bold text-gray-600 uppercase tracking-wider text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            <tr v-for="submission in assignmentSubmissions" :key="submission.id" class="hover:bg-gray-50/80 transition duration-100">
+                                <td class="px-6 py-4 font-bold text-gray-900 flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs uppercase">
+                                        {{ submission.student?.name ? submission.student.name.charAt(0) : 'S' }}
+                                    </div>
+                                    {{ submission.student?.name || 'Unknown Enrollee' }}
+                                </td>
+                                
+                                <td class="px-6 py-4 text-gray-600 font-medium">
+                                    {{ submission.assignment?.title || 'System Task Module' }}
+                                </td>
+                                
+                                <td class="px-6 py-4">
+                                    <span v-if="submission.is_late" 
+                                        class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-50 text-red-600 border border-red-200">
+                                        <i class="fa-solid fa-clock-rotate-left mr-1"></i> Late Submission
+                                    </span>
+                                    <span v-else class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                                        <i class="fa-solid fa-circle-check mr-1"></i> On-Time
+                                    </span>
+                                </td>
+                                
+                                <td class="px-6 py-4 font-black">
+                                    <span v-if="submission.grade !== null" class="text-blue-900 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200">
+                                        {{ submission.grade }} <span class="text-gray-400 font-normal">/ 100</span>
+                                    </span>
+                                    <span v-else class="text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200 text-[11px] font-bold">
+                                        <i class="fa-solid fa-hourglass-half animate-spin text-[10px] mr-1"></i> Pending Review
+                                    </span>
+                                </td>
+                                
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <input 
+                                            v-model="submission.inputScore" 
+                                            type="number" 
+                                            placeholder="0-100" 
+                                            class="w-16 p-1 text-center font-bold text-xs border rounded-lg focus:outline-indigo-600"
+                                        />
+                                        <button 
+                                            @click="processGrading(submission)" 
+                                            class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-black hover:shadow-md transition active:scale-95 flex items-center gap-1"
+                                        >
+                                            <i class="fa-solid fa-marker"></i> Save Grade
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr v-if="assignmentSubmissions.length === 0">
+                                <td colspan="5" class="px-6 py-12 text-center text-gray-400 italic text-sm">
+                                    No records found. No student coursework submissions logged in current parameters.
                                 </td>
                             </tr>
                         </tbody>

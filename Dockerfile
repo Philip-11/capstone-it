@@ -20,22 +20,25 @@ RUN apk update && apk add --no-cache \
     nodejs \
     npm
 
-# 3. I-set ang working directory (ito ang default public folder ng trafex image)
+# 3. KOPYAHIN SI COMPOSER MULA SA OFFICIAL IMAGE (Ito ang nawawalang piraso!)
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# 4. I-set ang working directory (ito ang default public folder ng trafex image)
 WORKDIR /var/www/html
 
-# 4. Kopyahin ang buong project files mo
+# 5. Kopyahin ang buong project files mo
 COPY --chown=nobody:nobody . .
 
-# 5. I-install ang Composer at Node dependencies, tsaka i-build si Vue
+# 6. I-install ang Composer at Node dependencies, tsaka i-build si Vue
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install
 RUN npm run build
 
-# 6. I-configure si Nginx para ituro ang root sa /public folder ng Laravel
+# 7. I-configure si Nginx para ituro ang root sa /public folder ng Laravel
 RUN sed -i 's|root /var/www/html;|root /var/www/html/public;|g' /etc/nginx/conf.d/default.conf
 
-# 7. I-set ang tamang permissions para sa Laravel storage
+# 8. I-set ang tamang permissions para sa Laravel storage
 RUN chown -R nobody:nobody /var/www/html/storage /var/www/html/bootstrap/cache
 
-# 8. Balik sa safe (non-root) user na 'nobody' na siyang gamit ng image na ito
+# 9. Balik sa safe (non-root) user na 'nobody' na siyang gamit ng image na ito
 USER nobody

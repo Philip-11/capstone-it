@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attempt;
+use App\Models\Quiz;
 use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,8 +43,12 @@ class AIPerformanceController extends Controller
         $averageGrade = $totalAssignments > 0 ? round($totalGrade / $totalAssignments, 2) : 0;
 
         //Get data from attempts table
-        $attempts = $subject->attempt()
-            ->where('user_id', $student->id)->get();
+        $lessonIds = $subject->lessons()->pluck('id');
+        $quizIds = Quiz::whereIn('lesson_id', $lessonIds)->pluck('id');
+
+        $attempts = Attempt::whereIn('quiz_id', $quizIds)
+            ->where('user_id', $student->id)
+            ->get();
 
         $totalAttempts = $attempts->count();
         $averageQuizScore = $attempts->avg('score') ?? 0;

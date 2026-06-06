@@ -7,6 +7,9 @@ const props = defineProps({
     subject: Object
 });
 
+// Navigation Tab Controls pre
+const activeTab = ref('lessons'); 
+
 // ==========================================
 // 1. LESSON OVERRIDE STATES & LOGIC
 // ==========================================
@@ -177,18 +180,27 @@ const deleteQuiz = (id) => {
                     </div>
                     
                     <div class="flex flex-col items-center gap-2 shrink-0">
-                        <span class="text-xs font-black tracking-widest bg-slate-900/40 text-amber-400 px-4 py-2 rounded-xl border border-white/10 select-all font-mono" title="Click to copy subject key">
+                        <span class="text-xs font-black tracking-widest bg-slate-900/40 text-amber-400 px-4 py-2 rounded-xl border border-white/10 select-all font-mono">
                             CODE: {{ subject.subject_code }}
                         </span>
-                        <button @click="openAddLesson" class="bg-emerald-600 text-white px-[18px] py-2.5 rounded-xl font-bold hover:bg-emerald-700 transition duration-200 shadow-md flex items-center gap-2 active:scale-95 text-xs">
+                        <button v-if="activeTab === 'lessons'" @click="openAddLesson" class="bg-emerald-600 text-white px-[18px] py-2.5 rounded-xl font-bold hover:bg-emerald-700 transition duration-200 shadow-md flex items-center gap-2 active:scale-95 text-xs">
                             <i class="fa-solid fa-folder-plus"></i> Inject New Lesson
                         </button>
                     </div>
                 </section>
 
-                <section class="space-y-4">
+                <div class="flex gap-6 border-b border-white/10 pb-1">
+                    <button @click="activeTab = 'lessons'" :class="activeTab === 'lessons' ? 'text-white border-b-2 border-blue-400 pb-3 font-bold text-sm' : 'text-white/60 pb-3 hover:text-white text-sm transition font-medium'">
+                        <i class="fa-solid fa-book-bookmark mr-1.5 text-blue-400"></i> Coursework & Lessons
+                    </button>
+                    <button @click="activeTab = 'students'" :class="activeTab === 'students' ? 'text-white border-b-2 border-blue-400 pb-3 font-bold text-sm' : 'text-white/60 pb-3 hover:text-white text-sm transition font-medium'">
+                        <i class="fa-solid fa-user-graduate mr-1.5 text-purple-400"></i> Enrolled Student Analytics
+                    </button>
+                </div>
+
+                <section v-if="activeTab === 'lessons'" class="space-y-4 animate-[fadeIn_0.2s_ease-out]">
                     <div class="flex justify-between items-center text-white">
-                        <h3 class="text-xl font-bold flex items-center gap-2">
+                        <h3 class="text-lg font-bold flex items-center gap-2">
                             <i class="fa-solid fa-folder-open text-blue-300"></i> Curriculum Structure & Class Logs
                         </h3>
                         <span class="text-xs font-semibold bg-white/10 px-3 py-1 rounded-md border border-white/10">Lessons Loaded: {{ subject.lessons ? subject.lessons.length : 0 }}</span>
@@ -280,14 +292,66 @@ const deleteQuiz = (id) => {
 
                         <div v-if="!subject.lessons || subject.lessons.length === 0" class="col-span-full bg-white/10 text-white/70 border border-dashed border-white/20 p-12 rounded-[18px] text-center">
                             <i class="fa-solid fa-folder-minus text-3xl mb-3 opacity-40 block"></i>
-                            No active lessons setup inside this syllabus layout yet. Use the action button above to initialize tracks.
+                            No active lessons setup inside this syllabus layout yet.
                         </div>
+                    </div>
+                </section>
+
+                <section v-if="activeTab === 'students'" class="space-y-4 animate-[fadeIn_0.2s_ease-out]">
+                    <div class="flex justify-between items-center text-white">
+                        <h3 class="text-lg font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-user-graduate text-purple-300"></i> Enrolled Class List
+                        </h3>
+                        <span class="text-xs font-semibold bg-white/10 px-3 py-1 rounded-md border border-white/10">Total Enrolled: {{ subject.students ? subject.students.length : 0 }}</span>
+                    </div>
+
+                    <div class="bg-white rounded-[22px] shadow-xl overflow-hidden border border-gray-100">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-50/70 border-b">
+                                <tr>
+                                    <th class="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-wider">Student Profile</th>
+                                    <th class="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-wider">Email Address</th>
+                                    <th class="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-wider text-right">Performance Diagnostics</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 bg-white">
+                                <tr v-for="student in subject.students" :key="student.id" class="hover:bg-slate-50/60 transition duration-150">
+                                    <td class="px-6 py-4 flex items-center gap-3">
+                                        <div class="w-9 h-9 bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-700 rounded-xl flex items-center justify-center font-bold text-xs shadow-sm">
+                                            {{ student.name.substring(0,2).toUpperCase() }}
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="font-bold text-slate-900 text-sm leading-tight">{{ student.name }}</span>
+                                            <span class="text-[10px] text-slate-400 font-semibold tracking-wide uppercase mt-0.5">Role: Student</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-xs text-gray-500 font-medium font-mono">
+                                        {{ student.email }}
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <Link 
+                                            :href="route('admin.subjects.student.ai-report', [subject.id, student.id])"
+                                            class="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:from-purple-700 hover:to-blue-700 hover:shadow-md transition duration-200 inline-flex items-center gap-1.5 active:scale-95"
+                                        >
+                                            <i class="fa-solid fa-wand-magic-sparkles text-[11px]"></i> Run AI Analytics
+                                        </Link>
+                                    </td>
+                                </tr>
+                                
+                                <tr v-if="!subject.students || subject.students.length === 0">
+                                    <td colspan="3" class="px-6 py-14 text-center text-gray-400 bg-slate-50/20">
+                                        <i class="fa-solid fa-user-slash text-3xl mb-3 opacity-25 block"></i>
+                                        <p class="text-sm font-semibold text-slate-400">No student accounts bound to this class code yet.</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </section>
             </main>
 
             <div v-if="showLessonModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-                <div class="bg-white rounded-[20px] max-w-md w-full p-6 shadow-2xl border border-slate-100 animate-[fadeIn_0.2s_ease-out]">
+                <div class="bg-white rounded-[20px] max-w-md w-full p-6 shadow-2xl border border-slate-100">
                     <div class="flex justify-between items-center mb-5">
                         <h3 class="text-lg font-bold text-blue-900 flex items-center gap-2">
                             <i class="fa-solid fa-screwdriver-wrench text-blue-600"></i>
@@ -313,7 +377,7 @@ const deleteQuiz = (id) => {
             </div>
 
             <div v-if="showAssignmentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-                <div class="bg-white rounded-[20px] max-w-md w-full p-6 shadow-2xl border border-slate-100 animate-[fadeIn_0.2s_ease-out]">
+                <div class="bg-white rounded-[20px] max-w-md w-full p-6 shadow-2xl border border-slate-100">
                     <div class="flex justify-between items-center mb-5">
                         <h3 class="text-lg font-bold text-blue-900 flex items-center gap-2">
                             <i class="fa-solid fa-file-pen text-indigo-600"></i>
@@ -339,7 +403,7 @@ const deleteQuiz = (id) => {
             </div>
 
             <div v-if="showQuizModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-                <div class="bg-white rounded-[20px] max-w-md w-full p-6 shadow-2xl border border-slate-100 animate-[fadeIn_0.2s_ease-out]">
+                <div class="bg-white rounded-[20px] max-w-md w-full p-6 shadow-2xl border border-slate-100">
                     <div class="flex justify-between items-center mb-5">
                         <h3 class="text-lg font-bold text-blue-900 flex items-center gap-2">
                             <i class="fa-solid fa-receipt text-purple-600"></i>

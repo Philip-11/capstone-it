@@ -179,6 +179,23 @@ const processGrading = (submission) => {
                                             <i class="fa-solid fa-marker"></i> Save Grade
                                         </button>
                                     </div>
+
+                                    <div class="border-t border-gray-100 pt-3 mt-3 space-y-2">
+                                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Submitted Student Work:</span>
+                                        
+                                        <div v-if="submission.submission_text" class="p-3 bg-gray-50 border border-gray-100 rounded-xl text-xs text-gray-700 text-justify">
+                                            {{ submission.submission_text }}
+                                        </div>
+
+                                        <div v-if="submission.file_path" class="flex items-center justify-between p-2.5 bg-blue-50/50 border border-blue-100 rounded-xl">
+                                            <span class="text-xs font-medium text-blue-950 truncate max-w-[200px]">
+                                                <i class="fa-solid fa-file-lines text-blue-500 mr-1"></i> {{ submission.file_path.split('/').pop() }}
+                                            </span>
+                                            <a :href="'/storage/' + submission.file_path" target="_blank" class="px-2.5 py-1 bg-white border border-blue-200 text-blue-700 rounded-lg text-[10px] font-bold hover:bg-blue-50 transition">
+                                                Open File <i class="fa-solid fa-external-link text-[8px] ml-0.5"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             

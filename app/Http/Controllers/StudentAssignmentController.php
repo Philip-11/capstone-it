@@ -36,7 +36,9 @@ class StudentAssignmentController extends Controller
         $filePath = null;
 
         if ($request->hasFile('file')){
-            $filePath = $request->file('file')->store('submissions', 'public');
+            $file = $request->file('file');
+            $originalName = $request->file('file')->getClientOriginalName();
+            $filePath = $file->storeAs('submissions', $originalName, 'public'); 
         }
 
         AssignmentSubmission::updateOrCreate(

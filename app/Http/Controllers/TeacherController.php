@@ -202,7 +202,7 @@ class TeacherController extends Controller
     }
 
     public function downloadLesson(Lesson $lesson){
-        if ($lesson->user_id !== Auth::id()){
+        if ($lesson->user_id !== Auth::id() && Auth::user()->role !== 'student') {
             abort(403);
         }
 

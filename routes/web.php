@@ -13,6 +13,8 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\StudentAssignmentController;
 use App\Http\Controllers\StudentQuizController;
 use App\Http\Controllers\TeacherAnalyticsController;
+use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Http\Middleware\EnsureUserIsStudent;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,6 +25,9 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/lessons/{lesson}/download', [TeacherController::class, 'downloadLesson'])->name('teacher.lessons.download');
+});
 
 Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->group(function () {
 
@@ -42,8 +47,7 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->gr
 
     Route::delete('/teacher/lessons/{lesson}', [TeacherController::class, 'destroyLesson'])->name('teacher.lessons.destroy');
 
-    Route::get('/lessons/{lesson}/download', [TeacherController::class, 'downloadLesson'])->name('teacher.lessons.download');
-
+    
     Route::get('/teacher/quizzes', [QuizController::class, 'index'])->name('teacher.quizzes.index');
     Route::get('/teacher/quizzes/create', [QuizController::class, 'create'])->name('teacher.quizzes.create');
     Route::post('/teacher/quizzes', [QuizController::class, 'store'])->name('teacher.quizzes.store');
@@ -63,7 +67,7 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->gr
 });
 
 //Student Route
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', EnsureUserIsStudent::class])->group(function () {
     Route::get('/student/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
     Route::post('/student/join-subject', [StudentController::class, 'joinSubject'])->name('student.join');
 
@@ -82,7 +86,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/teacher/ai-chat', [AIChatController::class, 'handleChat'])->name('teacher.ai-chat');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function () {
     // Admin Routes
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');

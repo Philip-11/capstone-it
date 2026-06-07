@@ -51,11 +51,31 @@ class TeacherController extends Controller
             return $submission;
         });
 
+        $activeStudents = collect()
+            ->merge($quizAttempts->pluck('student'))
+            ->merge($assignmentSubmissions->pluck('student'))
+            ->filter()
+            ->unique('id')
+            ->values()
+            ->map(function($student) use ($user){
+                $firstAttempt = Attempt::where('user_id', $student->id)
+                    ->whereHas('quiz.lesson', function($query) use ($user){
+                        $query->where('user_id', $user->id);
+                    })->first();
+
+                $student->active_subject_id = $firstAttempt ? $firstAttempt->quiz->lesson->subject_id : AssignmentSubmission::where('user_id', $student->id)->whereHas('assignment.lesson', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })->first()?->assignment->lesson->subject_id;
+
+                return $student;
+            });
+
         return Inertia::render('Teacher/Dashboard', [
             'lessons' => $lessons,
             'subjects' => $subjects,
             'quizAttempts' => $quizAttempts,
             'assignmentSubmissions' => $assignmentSubmissions,
+            'activeStudents' => $activeStudents,
         ]);
     }
 

@@ -7,6 +7,7 @@ defineOptions({ layout: AuthenticatedLayout });
 const props = defineProps({
     quizAttempts: Array,
     assignmentSubmissions: Array,
+    activeStudents: Array,
 });
 
 const processGrading = (submission) => {
@@ -188,6 +189,41 @@ const processGrading = (submission) => {
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </section>
+
+            <section class="bg-white p-6 md:p-8 rounded-[24px] shadow-xl border border-gray-100 space-y-4">
+                <div>
+                    <h2 class="text-xl font-bold text-blue-950 flex items-center gap-2">
+                        <i class="fa-solid fa-brain text-purple-600"></i> Active Student Cognitive Diagnostics
+                    </h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Comprehensive dynamic repository of students actively submitting academic workloads and taking quiz evaluations.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div v-for="student in activeStudents" :key="student.id" class="border border-gray-100 rounded-2xl p-4 bg-gray-50/50 hover:bg-white hover:shadow-md transition flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center font-black text-sm uppercase">
+                                {{ student.name.charAt(0) }}
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-gray-900">{{ student.name }}</h4>
+                                <p class="text-[10px] text-gray-400 font-medium">Student ID: #{{ student.id }}</p>
+                            </div>
+                        </div>
+                        
+                        <Link 
+                            v-if="student.active_subject_id"
+                            :href="route('teacher.students.analytics', { subject: student.active_subject_id, student: student.id })"
+                            class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-3 py-2 rounded-xl text-xs font-black shadow-sm hover:shadow-md transition active:scale-95 flex items-center gap-1"
+                        >
+                            <i class="fa-solid fa-chart-line"></i> AI Analytics
+                        </Link>
+                    </div>
+
+                    <div v-if="activeStudents.length === 0" class="col-span-full text-center py-6 text-gray-400 italic text-xs">
+                        No active students found with submitted data metrics yet.
+                    </div>
                 </div>
             </section>
 

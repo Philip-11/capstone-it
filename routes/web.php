@@ -27,6 +27,8 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/lessons/{lesson}/download', [TeacherController::class, 'downloadLesson'])->name('teacher.lessons.download');
+    Route::get('/teacher/ai-chat/history', [AIChatController::class, 'getChatHistory'])->name('teacher.ai-chat.history');
+    Route::post('/teacher/ai-chat', [AIChatController::class, 'handleChat'])->name('teacher.ai-chat');
 });
 
 Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->group(function () {
@@ -81,9 +83,6 @@ Route::middleware(['auth', EnsureUserIsStudent::class])->group(function () {
     Route::get('/student/assignments/', [StudentAssignmentController::class, 'assignments'])->name('student.assignments.index');
     Route::post('/student/assignments/{assignment}/submit', [StudentAssignmentController::class, 'submit'])->name('student.assignments.submit');
 
-    //AI Route
-    Route::get('/teacher/ai-chat/history', [AIChatController::class, 'getChatHistory'])->name('teacher.ai-chat.history');
-    Route::post('/teacher/ai-chat', [AIChatController::class, 'handleChat'])->name('teacher.ai-chat');
 });
 
 Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function () {

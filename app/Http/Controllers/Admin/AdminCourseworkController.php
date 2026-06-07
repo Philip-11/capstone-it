@@ -13,7 +13,7 @@ class AdminCourseworkController extends Controller
 {
     public function manageSubject(Subject $subject)
     {
-        $subject->load(['lessons.assignments', 'lessons.quizzes', 'teacher']);
+        $subject->load(['lessons.assignments', 'lessons.quizzes', 'teacher', 'students']);
 
         return Inertia::render('Admin/Subjects/Manage', [
             'subject' => $subject,

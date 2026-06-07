@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminCourseworkController;
+use App\Http\Controllers\Admin\AIPerformanceController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AIChatController;
@@ -11,7 +12,9 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\StudentAssignmentController;
 use App\Http\Controllers\StudentQuizController;
+use App\Http\Controllers\TeacherAnalyticsController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', function() {
     return redirect()->route('login');
@@ -54,6 +57,9 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->gr
     Route::get('/teacher/assignments/{assignment}/edit', [AssignmentController::class, 'edit'])->name('teacher.assignments.edit');
     Route::put('/teacher/assignments/{assignment}', [AssignmentController::class, 'update'])->name('teacher.assignments.update');
     Route::delete('/teacher/assignments/{assignment}', [AssignmentController::class, 'destroy'])->name('teacher.assignments.destroy');
+    Route::put('/teacher/submissions/{submission}/grade', [AssignmentController::class, 'gradeSubmission'])->name('teacher.submissions.grade');
+
+    Route::get('/teacher/subjects/{subject}/students/{student}/analytics', [TeacherAnalyticsController::class, 'showStudentReport'])->name('teacher.students.analytics');
 });
 
 //Student Route
@@ -95,4 +101,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/subjects/{subject}/lessons', [AdminCourseworkController::class, 'storeLesson'])->name('admin.lessons.store');
     Route::put('/admin/lessons/{lesson}', [AdminCourseworkController::class, 'updateLesson'])->name('admin.lessons.update');
     Route::delete('/admin/lessons/{lesson}', [AdminCourseworkController::class, 'destroyLesson'])->name('admin.lessons.destroy');
+
+    //AI Report
+    Route::get('/admin/subjects/{subject}/students/{student}/ai-report', [AIPerformanceController::class, 'generateReport'])->name('admin.subjects.student.ai-report');
 });

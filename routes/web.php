@@ -12,6 +12,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\StudentAssignmentController;
 use App\Http\Controllers\StudentQuizController;
+use App\Http\Controllers\TeacherAnalyticsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -57,6 +58,8 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsTeacher::class])->gr
     Route::put('/teacher/assignments/{assignment}', [AssignmentController::class, 'update'])->name('teacher.assignments.update');
     Route::delete('/teacher/assignments/{assignment}', [AssignmentController::class, 'destroy'])->name('teacher.assignments.destroy');
     Route::put('/teacher/submissions/{submission}/grade', [AssignmentController::class, 'gradeSubmission'])->name('teacher.submissions.grade');
+
+    Route::get('/teacher/subjects/{subject}/students/{student}/analytics', [TeacherAnalyticsController::class, 'showStudentReport'])->name('teacher.students.analytics');
 });
 
 //Student Route

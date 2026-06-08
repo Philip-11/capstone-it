@@ -16,10 +16,17 @@ const props = defineProps({
             </div>
 
             <nav class="hidden md:flex items-center gap-[34px]">
-                <Link :href="route('student.dashboard')" class="text-gray-600 hover:text-blue-600 text-sm font-semibold transition">Dashboard</Link>
-                <a href="#" class="text-blue-600 font-bold text-sm py-6 relative after:content-[''] after:absolute after:left-0 after:bottom-[-3px] after:w-full after:h-[3px] after:bg-blue-600 after:rounded-t">My Courses</a>
-                <a href="#" class="text-gray-600 hover:text-blue-600 text-sm font-semibold transition">Assignments</a>
-                <a href="#" class="text-gray-600 hover:text-blue-600 text-sm font-semibold transition">Profile</a>
+                <Link :href="route('student.dashboard')" class="text-blue-600 font-bold text-sm py-6 relative after:content-[''] after:absolute after:left-0 after:bottom-[-3px] after:w-full after:h-[3px] after:bg-blue-600 after:rounded-t">
+                    Dashboard
+                </Link>
+                <Link :href="route('student.quizzes.index')" class="text-gray-600 hover:text-blue-600 text-sm font-semibold transition">
+                    Quizzes
+                </Link>
+                <Link :href="route('student.assignments.index')" class="text-gray-600 hover:text-blue-600 text-sm font-semibold transition">
+                    Assignments
+                </Link>
+                <!-- <a href="#" class="text-gray-600 hover:text-blue-600 text-sm font-semibold transition">Assignments</a> -->
+                <!-- <a href="#" class="text-gray-600 hover:text-blue-600 text-sm font-semibold transition">Profile</a> -->
             </nav>
 
             <Link method="post" href="/logout" as="button" class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-2.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition hover:bg-red-600 shadow-md">

@@ -28,7 +28,13 @@ class AuthController extends Controller
                 return redirect()->intended('/teacher/dashboard');
             }
 
-            return redirect()->intended('/student/dashboard');
+            if (Auth::user()->role === 'student'){
+                return redirect()->intended('/student/dashboard');
+            }
+
+            if (Auth::user()->role === 'admin'){
+                return redirect()->intended('/admin/users');
+            }
         }
 
         return back()->withErrors([
